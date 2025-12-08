@@ -119,6 +119,9 @@ function initContactForm() {
     const form = document.getElementById('contact-form');
     if (!form) return;
 
+    // Formspree endpoint for contact@iteratim.io
+    const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xnnebzpo';
+
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
@@ -129,15 +132,33 @@ function initContactForm() {
         button.innerHTML = '<span>Sending...</span>';
         button.disabled = true;
 
-        // Simulate form submission (replace with actual endpoint)
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        try {
+            // Get form data
+            const formData = new FormData(form);
 
-        // Show success
-        button.innerHTML = '<span>Message Sent! ✓</span>';
-        button.style.background = '#10b981';
+            // Submit to Formspree
+            const response = await fetch(FORMSPREE_ENDPOINT, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
 
-        // Reset form
-        form.reset();
+            if (response.ok) {
+                // Show success
+                button.innerHTML = '<span>Message Sent! ✓</span>';
+                button.style.background = '#10b981';
+                form.reset();
+            } else {
+                throw new Error('Form submission failed');
+            }
+        } catch (error) {
+            // Show error
+            button.innerHTML = '<span>Error - Try Again</span>';
+            button.style.background = '#ef4444';
+            console.error('Form submission error:', error);
+        }
 
         // Reset button after delay
         setTimeout(() => {
