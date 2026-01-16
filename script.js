@@ -176,10 +176,10 @@ function initContactForm() {
 const projects = [
     {
         category: 'Coming Soon',
-        title: 'TrainArc',
+        title: 'TrainAdapt',
         description: 'Your personal AI fitness architect. Intelligent workout programs that evolve with you — adapting to your progress, goals, and lifestyle.',
         colors: ['#0a1f1a', '#0d2f28', '#00d4aa'],
-        image: 'assets/images/trainarc-preview.png'
+        image: 'assets/images/trainadapt-icon.png'
     },
     {
         category: 'Coming Soon',
@@ -201,23 +201,27 @@ function renderProjects() {
     const grid = document.getElementById('projects-grid');
     if (!grid) return;
 
-    grid.innerHTML = projects.map((project, index) => `
-        <article class="project-card coming-soon" data-category="coming-soon">
-            <div class="project-image">
-                <div class="project-mockup">
-                    ${renderComingSoonMockup(project, index)}
+    grid.innerHTML = projects.map((project, index) => {
+        const hasImage = !!project.image;
+        return `
+            <article class="project-card coming-soon" data-category="coming-soon">
+                <div class="project-image ${hasImage ? 'has-full-image' : ''}">
+                    ${hasImage ?
+                `<img src="${project.image}" alt="${project.title}" class="project-full-image">` :
+                `<div class="project-mockup">${renderComingSoonMockup(project, index)}</div>`
+            }
+                    <div class="project-overlay">
+                        <span class="project-view">Coming Soon</span>
+                    </div>
                 </div>
-                <div class="project-overlay">
-                    <span class="project-view">Coming Soon</span>
+                <div class="project-info">
+                    <span class="project-category">${project.category}</span>
+                    <h3 class="project-title">${project.title}</h3>
+                    <p class="project-desc">${project.description}</p>
                 </div>
-            </div>
-            <div class="project-info">
-                <span class="project-category">${project.category}</span>
-                <h3 class="project-title">${project.title}</h3>
-                <p class="project-desc">${project.description}</p>
-            </div>
-        </article>
-    `).join('');
+            </article>
+        `;
+    }).join('');
 }
 
 function renderComingSoonMockup(project, index) {
@@ -248,12 +252,16 @@ function renderComingSoonMockup(project, index) {
         </svg>`
     ];
 
+    const iconHtml = project.image ?
+        `<img src="${project.image}" alt="${project.title}" style="width: 100%; height: 100%; object-fit: contain;">` :
+        (icons[index] || icons[0]);
+
     return `
         <div class="mockup-phone">
             <div class="mockup-screen" style="background: linear-gradient(180deg, ${project.colors[0]}, ${project.colors[1]});">
                 <div class="coming-soon-ui">
                     <div class="coming-soon-icon">
-                        ${icons[index] || icons[0]}
+                        ${iconHtml}
                     </div>
                     <div class="coming-soon-bars">
                         <div class="bar" style="background: ${project.colors[2]}; width: 80%;"></div>
