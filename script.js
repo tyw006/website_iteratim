@@ -1,388 +1,431 @@
-/**
- * Iteratim Studios - Main JavaScript
- * Handles navigation, scroll effects, form handling, and dynamic content
- */
-
 document.addEventListener('DOMContentLoaded', () => {
-    initNavigation();
-    initScrollEffects();
-    initContactForm();
-    renderProjects();
-    renderServices();
+  const page = document.body.dataset.page;
+
+  initScrolledNav(page);
+
+  if (page === 'home') {
+    initHomePage();
+  } else if (page === 'privacy') {
+    initPrivacyPage();
+  } else if (page === 'terms-seshy') {
+    initTermsPage();
+  }
 });
 
-// ========================================
-// Navigation
-// ========================================
+function initScrolledNav(page) {
+  const nav = document.getElementById('nav');
+  if (!nav) return;
 
-function initNavigation() {
-    const navbar = document.getElementById('navbar');
-    const navToggle = document.getElementById('nav-toggle');
-    const navMenu = document.getElementById('nav-menu');
-    const navLinks = document.querySelectorAll('.nav-link');
+  const thresholds = {
+    home: 40,
+    privacy: 40,
+    support: 20
+  };
+  const threshold = thresholds[page];
+  if (typeof threshold !== 'number') return;
 
-    // Scroll effect for navbar
-    let lastScroll = 0;
-    window.addEventListener('scroll', () => {
-        const currentScroll = window.pageYOffset;
-
-        if (currentScroll > 50) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
-
-        lastScroll = currentScroll;
-    });
-
-    // Mobile menu toggle
-    navToggle.addEventListener('click', () => {
-        navToggle.classList.toggle('active');
-        navMenu.classList.toggle('active');
-        document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
-    });
-
-    // Close menu on link click
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            navToggle.classList.remove('active');
-            navMenu.classList.remove('active');
-            document.body.style.overflow = '';
-        });
-    });
-
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                const offset = 80;
-                const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
-                window.scrollTo({ top: targetPosition, behavior: 'smooth' });
-            }
-        });
-    });
+  const setNav = () => nav.classList.toggle('scrolled', window.scrollY > threshold);
+  window.addEventListener('scroll', setNav, { passive: true });
+  setNav();
 }
 
-// ========================================
-// Scroll Effects
-// ========================================
+function initHomePage() {
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const stage = document.querySelector('.hero-stage');
+  const hero = document.getElementById('heroObject');
+  const scenes = document.querySelectorAll('.scenes .scene');
+  const railBtns = document.querySelectorAll('.scene-rail button');
+  const bg = document.getElementById('stageBg');
+  const coreShape = document.getElementById('coreShape');
+  const coreGroup = document.getElementById('coreGroup');
+  const coreTag = document.getElementById('coreTag');
+  const trailMain = document.getElementById('trailMain');
+  const trailGhost = document.getElementById('trailGhost');
+  const attemptsG = document.getElementById('attempts');
 
-function initScrollEffects() {
-    // Intersection Observer for fade-in animations
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.1
+  if (
+    !stage ||
+    !hero ||
+    !scenes.length ||
+    !coreShape ||
+    !coreGroup ||
+    !coreTag ||
+    !trailMain ||
+    !trailGhost ||
+    !attemptsG ||
+    !bg
+  ) {
+    return;
+  }
+
+  const N = 28;
+  const attempts = [];
+  for (let i = 0; i < N; i += 1) {
+    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    circle.setAttribute('class', i % 5 === 4 ? 'attempt violet' : 'attempt');
+    attemptsG.appendChild(circle);
+    attempts.push(circle);
+  }
+
+  const jitter = (index, seed) => {
+    const value = Math.sin(index * 12.9898 + seed) * 43758.5453;
+    return value - Math.floor(value);
+  };
+
+  const shapes = [
+    'M 0 -34 C 19 -34 34 -19 34 0 C 34 19 19 34 0 34 C -19 34 -34 19 -34 0 C -34 -19 -19 -34 0 -34 Z',
+    'M 0 -30 C 22 -30 30 -22 30 0 C 30 22 22 30 0 30 C -22 30 -30 22 -30 0 C -30 -22 -22 -30 0 -30 Z',
+    'M 0 -34 L 34 0 L 0 34 L -34 0 Z',
+    'M -26 -26 L 26 -26 L 26 26 L -26 26 Z'
+  ];
+  const tagsByScene = ['v1 · attempt', 'v∞ · found', 'v∞ · right', 'v∞ · shipped'];
+  let currentScene = 0;
+
+  if (prefersReducedMotion) {
+    scenes.forEach((scene, index) => scene.classList.toggle('in', index === 0));
+    railBtns.forEach((button, index) => button.classList.toggle('on', index === 0));
+    hero.style.setProperty('--hox', '0px');
+    hero.style.setProperty('--hoy', '0px');
+    hero.style.setProperty('--hoscale', '1');
+    hero.style.setProperty('--horot', '0deg');
+  }
+
+  let ticking = false;
+  const tick = () => {
+    const rect = stage.getBoundingClientRect();
+    const viewportHeight = window.innerHeight;
+    const total = Math.max(1, stage.offsetHeight - viewportHeight);
+    const progress = Math.min(1, Math.max(0, -rect.top / total));
+
+    const rotation = progress * 540;
+    const viewMid = viewportHeight / 2;
+    let best = 0;
+    let bestDist = Infinity;
+
+    scenes.forEach((scene, index) => {
+      const sceneRect = scene.getBoundingClientRect();
+      const midpoint = sceneRect.top + sceneRect.height / 2;
+      const distance = Math.abs(midpoint - viewMid);
+      if (distance < bestDist) {
+        best = index;
+        bestDist = distance;
+      }
+    });
+
+    if (best !== currentScene || !scenes[best].classList.contains('in')) {
+      currentScene = best;
+      scenes.forEach((scene, index) => scene.classList.toggle('in', index === best));
+      railBtns.forEach((button, index) => button.classList.toggle('on', index === best));
+    }
+
+    const scene = scenes[currentScene];
+    const align = scene ? scene.dataset.align : 'center';
+    const targetX = align === 'left' ? 180 : align === 'right' ? -180 : 0;
+    const targetY = align === 'center' ? Math.min(340, viewportHeight * 0.32) : 0;
+    const targetScale = align === 'center' ? (viewportHeight < 700 ? 0.42 : 0.55) : 1;
+
+    const prevX = parseFloat(hero.style.getPropertyValue('--hox')) || 0;
+    const nextX = prevX + (targetX - prevX) * 0.12;
+    const prevY = parseFloat(hero.style.getPropertyValue('--hoy')) || 0;
+    const nextY = prevY + (targetY - prevY) * 0.12;
+    const prevScale = parseFloat(hero.style.getPropertyValue('--hoscaleTarget')) || 1;
+    const nextScale = prevScale + (targetScale - prevScale) * 0.12;
+    const scale = (1 + Math.sin(progress * Math.PI) * 0.06) * nextScale;
+
+    hero.style.setProperty('--hoscaleTarget', nextScale.toFixed(3));
+    hero.style.setProperty('--hox', `${nextX.toFixed(1)}px`);
+    hero.style.setProperty('--hoy', `${nextY.toFixed(1)}px`);
+    hero.style.setProperty('--hoscale', scale.toFixed(3));
+    hero.style.setProperty('--horot', `${rotation.toFixed(1)}deg`);
+
+    const converge = Math.min(1, Math.max(0, progress * 1.05 + currentScene * 0.05));
+    const startRadius = 200;
+    const endRadius = 38;
+    const pathPoints = [];
+
+    for (let i = 0; i < N; i += 1) {
+      const t = i / (N - 1);
+      const baseAngle = t * Math.PI * 4.2 + (rotation * Math.PI / 180) * 0.08;
+      const baseRadius = startRadius * (1 - t) + endRadius * t;
+      const jitterRadius = (jitter(i, 1.1) - 0.5) * 60 * (1 - converge);
+      const jitterAngle = (jitter(i, 2.3) - 0.5) * 0.9 * (1 - converge);
+      const radius = baseRadius + jitterRadius;
+      const angle = baseAngle + jitterAngle;
+      const x = Math.cos(angle) * radius;
+      const y = Math.sin(angle) * radius;
+
+      pathPoints.push([x, y]);
+
+      const dot = attempts[i];
+      dot.setAttribute('cx', x.toFixed(1));
+      dot.setAttribute('cy', y.toFixed(1));
+      dot.setAttribute('r', (1.4 + t * 1.6).toFixed(2));
+      dot.style.opacity = (0.25 + t * 0.75).toFixed(2);
+      dot.classList.toggle('active', i >= N - 3);
+    }
+
+    const pathData = pathPoints
+      .map((point, index) => `${index === 0 ? 'M' : 'L'} ${point[0].toFixed(1)} ${point[1].toFixed(1)}`)
+      .join(' ');
+    trailMain.setAttribute('d', pathData);
+    trailMain.style.opacity = (0.35 + converge * 0.55).toFixed(2);
+
+    if (!trailGhost.getAttribute('data-init')) {
+      const ghost = [];
+      for (let i = 0; i < 60; i += 1) {
+        const t = i / 59;
+        const angle = t * Math.PI * 5 + 0.6;
+        const radius = 210 * (1 - t * 0.5) + (jitter(i, 9) - 0.5) * 25;
+        ghost.push(`${i === 0 ? 'M' : 'L'} ${(Math.cos(angle) * radius).toFixed(1)} ${(Math.sin(angle) * radius).toFixed(1)}`);
+      }
+      trailGhost.setAttribute('d', ghost.join(' '));
+      trailGhost.setAttribute('data-init', '1');
+    }
+
+    trailGhost.style.opacity = (0.25 * (1 - converge)).toFixed(2);
+    coreShape.setAttribute('d', shapes[currentScene] || shapes[0]);
+    coreGroup.style.opacity = (0.4 + converge * 0.6).toFixed(2);
+    coreGroup.setAttribute('transform', `rotate(${(rotation * 0.3).toFixed(1)})`);
+    coreTag.textContent = tagsByScene[currentScene] || tagsByScene[0];
+
+    const bgx = 50 + Math.sin(progress * Math.PI * 2) * 18;
+    const bgy = 30 + progress * 40;
+    const bga = 0.14 + Math.sin(progress * Math.PI) * 0.10;
+    const bgb = 0.10 + (1 - Math.cos(progress * Math.PI)) * 0.10;
+    bg.style.setProperty('--bgx', `${bgx}%`);
+    bg.style.setProperty('--bgy', `${bgy}%`);
+    bg.style.setProperty('--bga', bga.toFixed(3));
+    bg.style.setProperty('--bgb', bgb.toFixed(3));
+
+    ticking = false;
+  };
+
+  const requestTick = () => {
+    if (!ticking) {
+      requestAnimationFrame(tick);
+      ticking = true;
+    }
+  };
+
+  if (!prefersReducedMotion) {
+    window.addEventListener('scroll', requestTick, { passive: true });
+    window.addEventListener('resize', requestTick);
+
+    const loop = () => {
+      const rect = stage.getBoundingClientRect();
+      if (rect.bottom > 0 && rect.top < window.innerHeight) {
+        tick();
+      }
+      requestAnimationFrame(loop);
     };
+    loop();
+  }
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
-        });
-    }, observerOptions);
-
-    // Observe elements with animation classes
-    document.querySelectorAll('.project-card, .service-card, .section-header, .about-content, .contact-info').forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(20px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(el);
+  railBtns.forEach(button => {
+    button.addEventListener('click', () => {
+      const target = Number.parseInt(button.dataset.goto, 10);
+      const scene = scenes[target];
+      if (!scene) return;
+      window.scrollTo({
+        top: scene.getBoundingClientRect().top + window.scrollY,
+        behavior: 'smooth'
+      });
     });
+  });
 
-    // Add visible class styles
-    const style = document.createElement('style');
-    style.textContent = `
-        .visible { opacity: 1 !important; transform: translateY(0) !important; }
-        .project-card:nth-child(1) { transition-delay: 0s !important; }
-        .project-card:nth-child(2) { transition-delay: 0.1s !important; }
-        .project-card:nth-child(3) { transition-delay: 0.2s !important; }
-        .project-card:nth-child(4) { transition-delay: 0.3s !important; }
-        .project-card:nth-child(5) { transition-delay: 0.4s !important; }
-        .project-card:nth-child(6) { transition-delay: 0.5s !important; }
-        .service-card:nth-child(1) { transition-delay: 0s !important; }
-        .service-card:nth-child(2) { transition-delay: 0.1s !important; }
-        .service-card:nth-child(3) { transition-delay: 0.2s !important; }
-        .service-card:nth-child(4) { transition-delay: 0.3s !important; }
-    `;
-    document.head.appendChild(style);
+  if ('IntersectionObserver' in window) {
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(element => revealObserver.observe(element));
+  } else {
+    document.querySelectorAll('.reveal').forEach(element => element.classList.add('in'));
+  }
+
+  initContactForm();
+  initHomeAnchorScroll();
 }
-
-// ========================================
-// Contact Form
-// ========================================
 
 function initContactForm() {
-    const form = document.getElementById('contact-form');
-    if (!form) return;
+  const form = document.getElementById('contact-form');
+  if (!form) return;
 
-    // Formspree endpoint for contact@iteratim.io
-    const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xnnebzpo';
+  const endpoint = 'https://formspree.io/f/xnnebzpo';
+  form.addEventListener('submit', async event => {
+    event.preventDefault();
 
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
+    const button = form.querySelector('button[type="submit"]');
+    if (!button) return;
 
-        const button = form.querySelector('button[type="submit"]');
-        const originalText = button.innerHTML;
+    const original = button.innerHTML;
+    button.innerHTML = '<span>Sending…</span>';
+    button.disabled = true;
 
-        // Show loading state
-        button.innerHTML = '<span>Sending...</span>';
-        button.disabled = true;
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { Accept: 'application/json' }
+      });
 
-        try {
-            // Get form data
-            const formData = new FormData(form);
+      if (!response.ok) throw new Error('Form submission failed');
 
-            // Submit to Formspree
-            const response = await fetch(FORMSPREE_ENDPOINT, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'Accept': 'application/json'
-                }
-            });
+      button.innerHTML = '<span>Sent ✓</span>';
+      form.reset();
+    } catch (error) {
+      console.error('Form submission failed:', error);
+      button.innerHTML = '<span>Error — try again</span>';
+    }
 
-            if (response.ok) {
-                // Show success
-                button.innerHTML = '<span>Message Sent! ✓</span>';
-                button.style.background = '#10b981';
-                form.reset();
-            } else {
-                throw new Error('Form submission failed');
-            }
-        } catch (error) {
-            // Show error
-            button.innerHTML = '<span>Error - Try Again</span>';
-            button.style.background = '#ef4444';
-            console.error('Form submission error:', error);
-        }
+    window.setTimeout(() => {
+      button.innerHTML = original;
+      button.disabled = false;
+    }, 2800);
+  });
+}
 
-        // Reset button after delay
-        setTimeout(() => {
-            button.innerHTML = originalText;
-            button.style.background = '';
-            button.disabled = false;
-        }, 3000);
+function initHomeAnchorScroll() {
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', event => {
+      const href = link.getAttribute('href');
+      if (!href || href.length <= 1) return;
+
+      const target = document.querySelector(href);
+      if (!target) return;
+
+      event.preventDefault();
+      window.scrollTo({
+        top: target.getBoundingClientRect().top + window.scrollY - 72,
+        behavior: 'smooth'
+      });
     });
+  });
 }
 
-// ========================================
-// Projects Data & Rendering
-// ========================================
+function initPrivacyPage() {
+  const tabs = document.querySelectorAll('.tab');
+  const panels = document.querySelectorAll('.panel');
+  if (!tabs.length || !panels.length) return;
 
-const projects = [
-    {
-        category: 'Coming Soon',
-        title: 'TrainAdapt',
-        description: 'Your personal AI fitness architect. Intelligent workout programs that evolve with you — adapting to your progress, goals, and lifestyle.',
-        colors: ['#0a1f1a', '#0d2f28', '#00d4aa'],
-        image: 'assets/images/trainadapt-icon.png'
-    },
-    {
-        category: 'Coming Soon',
-        title: 'Project Beta',
-        description: 'Intelligent automation meets beautiful design. Leveraging AI to create seamless user experiences.',
-        colors: ['#0d1b2a', '#1b263b', '#415a77'],
-        image: 'assets/images/project-beta-preview.png'
-    },
-    {
-        category: 'Coming Soon',
-        title: 'Project Gamma',
-        description: 'A fresh take on AI-assisted productivity. Smart features that adapt to how you work.',
-        colors: ['#1a1423', '#2d2136', '#44384f'],
-        image: 'assets/images/project-gamma-preview.png'
+  const activateTab = (tabName, scrollToTop = true) => {
+    tabs.forEach(tab => tab.classList.toggle('on', tab.dataset.tab === tabName));
+    panels.forEach(panel => panel.classList.toggle('on', panel.dataset.panel === tabName));
+
+    const panel = document.querySelector(`[data-panel="${tabName}"]`);
+    if (!panel) return;
+
+    panel.querySelectorAll('.acc-item').forEach((item, index) => {
+      const body = item.querySelector('.acc-body');
+      if (!body) return;
+
+      if (index === 0) {
+        item.classList.add('open');
+        body.style.maxHeight = `${body.scrollHeight}px`;
+      } else {
+        item.classList.remove('open');
+        body.style.maxHeight = '0px';
+      }
+    });
+
+    history.replaceState(null, '', `#${tabName}`);
+    if (scrollToTop) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-];
+  };
 
-function renderProjects() {
-    const grid = document.getElementById('projects-grid');
-    if (!grid) return;
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => activateTab(tab.dataset.tab));
+  });
 
-    grid.innerHTML = projects.map((project, index) => {
-        const hasImage = !!project.image;
-        return `
-            <article class="project-card coming-soon" data-category="coming-soon">
-                <div class="project-image ${hasImage ? 'has-full-image' : ''}">
-                    ${hasImage ?
-                `<img src="${project.image}" alt="${project.title}" class="project-full-image">` :
-                `<div class="project-mockup">${renderComingSoonMockup(project, index)}</div>`
-            }
-                    <div class="project-overlay">
-                        <span class="project-view">Coming Soon</span>
-                    </div>
-                </div>
-                <div class="project-info">
-                    <span class="project-category">${project.category}</span>
-                    <h3 class="project-title">${project.title}</h3>
-                    <p class="project-desc">${project.description}</p>
-                </div>
-            </article>
-        `;
-    }).join('');
-}
+  document.querySelectorAll('.acc-head').forEach(head => {
+    const item = head.closest('.acc-item');
+    const body = item ? item.querySelector('.acc-body') : null;
+    if (!item || !body) return;
 
-function renderComingSoonMockup(project, index) {
-    // Unique icons for each project
-    const icons = [
-        // TrainArc - Fitness/Dumbbell icon
-        `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M6.5 6.5h-2a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h2"/>
-            <path d="M17.5 6.5h2a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-2"/>
-            <rect x="6.5" y="4" width="3" height="16" rx="1"/>
-            <rect x="14.5" y="4" width="3" height="16" rx="1"/>
-            <path d="M9.5 12h5"/>
-        </svg>`,
-        // Project Beta - AI/Brain icon
-        `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <circle cx="12" cy="12" r="3"/>
-            <circle cx="12" cy="5" r="2"/>
-            <circle cx="12" cy="19" r="2"/>
-            <circle cx="5" cy="12" r="2"/>
-            <circle cx="19" cy="12" r="2"/>
-            <path d="M12 7v2M12 15v2M7 12h2M15 12h2"/>
-        </svg>`,
-        // Project Gamma - Productivity/Tasks icon
-        `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <rect x="3" y="4" width="18" height="16" rx="2"/>
-            <path d="M7 8h4M7 12h10M7 16h6"/>
-            <circle cx="16" cy="8" r="1" fill="currentColor"/>
-        </svg>`
-    ];
-
-    const iconHtml = project.image ?
-        `<img src="${project.image}" alt="${project.title}" style="width: 100%; height: 100%; object-fit: contain;">` :
-        (icons[index] || icons[0]);
-
-    return `
-        <div class="mockup-phone">
-            <div class="mockup-screen" style="background: linear-gradient(180deg, ${project.colors[0]}, ${project.colors[1]});">
-                <div class="coming-soon-ui">
-                    <div class="coming-soon-icon">
-                        ${iconHtml}
-                    </div>
-                    <div class="coming-soon-bars">
-                        <div class="bar" style="background: ${project.colors[2]}; width: 80%;"></div>
-                        <div class="bar" style="background: ${project.colors[2]}; width: 60%;"></div>
-                        <div class="bar" style="background: ${project.colors[2]}; width: 70%;"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
-}
-
-function renderPhoneMockup(project, index) {
-    const patterns = [
-        `<div class="app-ui">
-            <div class="app-header" style="background: linear-gradient(135deg, ${project.colors[1]}, ${project.colors[2]});"></div>
-            <div class="app-cards">
-                <div class="app-card" style="background: ${project.colors[1]};"></div>
-                <div class="app-card small" style="background: ${project.colors[2]};"></div>
-            </div>
-        </div>`,
-        `<div class="app-ui">
-            <div class="app-ring" style="border-color: ${project.colors[2]};"></div>
-            <div class="app-stats">
-                <div class="stat" style="background: ${project.colors[1]};"></div>
-                <div class="stat" style="background: ${project.colors[2]};"></div>
-                <div class="stat" style="background: ${project.colors[1]};"></div>
-            </div>
-        </div>`,
-        `<div class="app-ui">
-            <div class="app-list">
-                <div class="list-item" style="background: ${project.colors[1]};"></div>
-                <div class="list-item" style="background: ${project.colors[2]};"></div>
-                <div class="list-item" style="background: ${project.colors[1]};"></div>
-            </div>
-        </div>`
-    ];
-
-    return `
-        <div class="mockup-phone">
-            <div class="mockup-screen" style="background: linear-gradient(180deg, ${project.colors[0]}, ${project.colors[1]});">
-                ${patterns[index % patterns.length]}
-            </div>
-        </div>
-    `;
-}
-
-function renderBrowserMockup(project, index) {
-    return `
-        <div class="mockup-browser">
-            <div class="browser-bar">
-                <div class="browser-dot" style="background: #ff5f56;"></div>
-                <div class="browser-dot" style="background: #ffbd2e;"></div>
-                <div class="browser-dot" style="background: #27ca40;"></div>
-            </div>
-            <div class="browser-content" style="background: linear-gradient(180deg, ${project.colors[0]}, ${project.colors[1]});">
-                <div class="web-preview">
-                    <div class="web-nav" style="background: ${project.colors[1]};"></div>
-                    <div class="web-hero" style="background: linear-gradient(135deg, ${project.colors[1]}, ${project.colors[2]});"></div>
-                    <div class="web-cards">
-                        <div class="web-card" style="background: ${project.colors[2]};"></div>
-                        <div class="web-card" style="background: ${project.colors[2]};"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
-}
-
-// ========================================
-// Services Data & Rendering
-// ========================================
-
-const services = [
-    {
-        title: 'iOS Apps',
-        description: 'Native iOS applications built with Swift, SwiftUI, and on-device AI capabilities',
-        icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <rect x="5" y="2" width="14" height="20" rx="3"/>
-            <line x1="12" y1="18" x2="12" y2="18" stroke-linecap="round" stroke-width="2"/>
-        </svg>`
-    },
-    {
-        title: 'Android Apps',
-        description: 'Native Android applications with Kotlin, Jetpack Compose, and ML Kit integration',
-        icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <rect x="5" y="2" width="14" height="20" rx="2"/>
-            <line x1="9" y1="18" x2="15" y2="18" stroke-linecap="round"/>
-        </svg>`
-    },
-    {
-        title: 'AI Integration',
-        description: 'Machine learning, LLMs, computer vision, and intelligent features built into your app',
-        icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <circle cx="12" cy="12" r="3"/>
-            <circle cx="12" cy="4" r="2"/>
-            <circle cx="12" cy="20" r="2"/>
-            <circle cx="4" cy="12" r="2"/>
-            <circle cx="20" cy="12" r="2"/>
-            <path d="M12 6v3M12 15v3M6 12h3M15 12h3"/>
-        </svg>`
-    },
-    {
-        title: 'App Store Ready',
-        description: 'From development to deployment — optimized for App Store and Play Store success',
-        icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <circle cx="12" cy="12" r="10"/>
-            <path d="M9 12l2 2 4-4"/>
-        </svg>`
+    if (item.classList.contains('open')) {
+      requestAnimationFrame(() => {
+        body.style.maxHeight = `${body.scrollHeight}px`;
+      });
+      head.setAttribute('aria-expanded', 'true');
+    } else {
+      head.setAttribute('aria-expanded', 'false');
     }
-];
 
-function renderServices() {
-    const grid = document.getElementById('services-grid');
-    if (!grid) return;
+    head.addEventListener('click', () => {
+      const isOpen = item.classList.toggle('open');
+      if (isOpen) {
+        body.style.maxHeight = `${body.scrollHeight}px`;
+        head.setAttribute('aria-expanded', 'true');
+      } else {
+        body.style.maxHeight = '0px';
+        head.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
 
-    grid.innerHTML = services.map(service => `
-        <div class="service-card">
-            <div class="service-icon">${service.icon}</div>
-            <h4>${service.title}</h4>
-            <p>${service.description}</p>
-        </div>
-    `).join('');
+  const tocLinks = document.querySelectorAll('.tnav');
+  const sections = document.querySelectorAll('.acc-section');
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const id = entry.target.id;
+        tocLinks.forEach(link => {
+          link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+        });
+      });
+    }, { rootMargin: '-20% 0px -60% 0px', threshold: 0 });
+
+    sections.forEach(section => {
+      if (section.id) observer.observe(section);
+    });
+  }
+
+  tocLinks.forEach(link => {
+    link.addEventListener('click', event => {
+      const href = link.getAttribute('href');
+      const target = href ? document.querySelector(href) : null;
+      if (!target) return;
+
+      event.preventDefault();
+      window.scrollTo({
+        top: target.getBoundingClientRect().top + window.scrollY - 90,
+        behavior: 'smooth'
+      });
+    });
+  });
+
+  const hash = window.location.hash.slice(1);
+  if (hash && document.querySelector(`.panel#${hash}`)) {
+    activateTab(hash, false);
+  }
+}
+
+function initTermsPage() {
+  const links = document.querySelectorAll('.toc a');
+  const sections = document.querySelectorAll('article section');
+  if (!links.length || !sections.length || !('IntersectionObserver' in window)) return;
+
+  const byId = {};
+  links.forEach(link => {
+    byId[link.getAttribute('href').slice(1)] = link;
+  });
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      links.forEach(link => link.classList.remove('active'));
+      const activeLink = byId[entry.target.id];
+      if (activeLink) activeLink.classList.add('active');
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(section => observer.observe(section));
 }

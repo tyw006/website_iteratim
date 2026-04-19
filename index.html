@@ -1,143 +1,303 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description"
-        content="Iteratim Studios - Independent mobile app development studio. Building AI-powered iOS and Android apps with cutting-edge tools.">
-    <title>Iteratim Studios | AI-Powered Mobile App Studio</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iteratim — AI-powered mobile apps</title>
+<meta name="description" content="Iteratim is an independent mobile app studio building AI-powered iOS and Android apps.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 </head>
+<body data-page="home">
 
-<body>
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <a href="#hero" class="nav-logo"><span class="logo-icon">◆</span><span>Iteratim</span></a>
-            <ul class="nav-menu" id="nav-menu">
-                <li><a href="#projects" class="nav-link">Projects</a></li>
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-                <li><a href="support.html" class="nav-link">Support</a></li>
-            </ul>
-            <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation"><span
-                    class="hamburger"></span></button>
-        </div>
-    </nav>
+<!-- global scroll-driven background -->
+<div class="stage-bg" id="stageBg"></div>
+<div class="stage-grid"></div>
 
-    <section class="hero" id="hero">
-        <div class="hero-bg">
-            <div class="hero-gradient"></div>
-            <div class="hero-grid"></div>
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="#top">
+      <svg class="brand-logo" viewBox="0 0 32 32" fill="none">
+        <!-- Iteratim mark: three nested squares, slightly rotated — iteration motif -->
+        <rect x="3" y="3" width="26" height="26" rx="5" stroke="#00d4aa" stroke-width="1.3" transform="rotate(0 16 16)" opacity=".5"/>
+        <rect x="7" y="7" width="18" height="18" rx="4" stroke="#00d4aa" stroke-width="1.3" transform="rotate(12 16 16)" opacity=".75"/>
+        <rect x="11" y="11" width="10" height="10" rx="2.5" fill="#00d4aa" transform="rotate(24 16 16)"/>
+      </svg>
+      <span class="brand-name">iteratim</span>
+    </a>
+    <div class="nav-links">
+      <a href="#work">Work</a>
+      <a href="#approach">Approach</a>
+      <a href="#services">Services</a>
+      <a href="support.html">Support</a>
+      <a class="nav-cta" href="#contact">Start a project →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO STAGE — pinned object + stacked scenes -->
+<section class="hero-stage" id="top">
+  <div class="hero-pin">
+    <div class="hero-object" id="heroObject">
+      <svg viewBox="-220 -220 440 440" id="heroSvg">
+        <defs>
+          <radialGradient id="coreGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="rgba(0,212,170,.35)"/>
+            <stop offset="100%" stop-color="rgba(0,212,170,0)"/>
+          </radialGradient>
+        </defs>
+        <!-- Iteration spiral: attempts converging to a refined core -->
+        <g id="iterField">
+          <!-- faint target reference ring -->
+          <circle class="axis" cx="0" cy="0" r="190"/>
+          <circle class="axis" cx="0" cy="0" r="130"/>
+          <circle class="axis" cx="0" cy="0" r="70"/>
+          <circle cx="0" cy="0" r="90" fill="url(#coreGrad)"/>
+          <!-- dynamic spiral trail -->
+          <path class="trail-ghost" id="trailGhost" d=""/>
+          <path class="trail" id="trailMain" d=""/>
+          <!-- attempt dots (populated by JS) -->
+          <g id="attempts"></g>
+          <!-- refined center -->
+          <g id="coreGroup">
+            <path class="core" id="coreShape" d="M 0 -28 C 15 -28 28 -15 28 0 C 28 15 15 28 0 28 C -15 28 -28 15 -28 0 C -28 -15 -15 -28 0 -28 Z"/>
+            <circle class="core-inner" cx="0" cy="0" r="3"/>
+          </g>
+          <!-- tag label near converged point -->
+          <text class="tag teal" id="coreTag" x="44" y="-38" text-anchor="start">v∞ · right</text>
+          <line class="axis" id="coreTagLine" x1="32" y1="-30" x2="42" y2="-38"/>
+          <!-- attempt counter axis label -->
+          <text class="axis-lbl" x="-200" y="214" text-anchor="start">iterations →</text>
+          <text class="axis-lbl" x="200" y="-200" text-anchor="end">signal</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <div class="scenes">
+    <section class="scene in" data-scene="0" data-align="center">
+      <div class="scene-inner">
+        <div class="scene-copy">
+          <div class="eyebrow"><span class="dot"></span>Iteratim · mobile app studio</div>
+          <h1 class="hero-title">What would you build<br>if nothing was<br><em>impossible?</em></h1>
+          <p class="hero-sub">An independent studio building AI-native mobile apps — the kind you thought were out of reach.</p>
+          <div class="hero-ctas">
+            <a class="btn btn-primary" href="#work">See the work <span class="arr">→</span></a>
+            <a class="btn btn-ghost" href="#contact">Start a project</a>
+          </div>
         </div>
-        <div class="hero-content">
-            <div class="hero-badge"><span class="badge-dot"></span>AI-Powered Mobile App Studio</div>
-            <h1 class="hero-title">We Build<br><span class="gradient-text">AI-Powered Mobile Apps</span></h1>
-            <p class="hero-subtitle">What would you build if you knew nothing is impossible?</p>
-            <div class="hero-cta">
-                <a href="#projects" class="btn btn-primary"><span>See Projects</span></a>
-                <a href="#contact" class="btn btn-secondary">Get in Touch</a>
-            </div>
-        </div>
-        <div class="hero-scroll"><span>Scroll to explore</span>
-            <div class="scroll-indicator"></div>
-        </div>
+      </div>
     </section>
 
-    <section class="projects" id="projects">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-label">Portfolio</span>
-                <h2 class="section-title">Projects</h2>
-                <p class="section-subtitle">AI-powered apps currently in development</p>
-            </div>
-            <div class="projects-grid" id="projects-grid"></div>
+    <section class="scene" data-scene="1" data-align="left">
+      <div class="scene-inner">
+        <div class="scene-copy">
+          <div class="scene-caption">02 · Method</div>
+          <h1 class="hero-title"><em>Iteratim</em> —<br>Latin for<br>"repeatedly."</h1>
+          <p class="hero-sub">Great software is found, not written. We ship, listen, rewrite, and sharpen until a product earns its place on your home screen.</p>
         </div>
+      </div>
     </section>
 
-    <section class="about" id="about">
-        <div class="container">
-            <div class="about-grid">
-                <div class="about-content">
-                    <span class="section-label">About the Studio</span>
-                    <h2 class="section-title">Crafting AI-Powered<br>Mobile Experiences</h2>
-                    <p class="about-text">Iteratim Studios is an independent mobile app studio that leverages AI tools
-                        and technologies to build intelligent, modern iOS and Android apps. Created and maintained by a
-                        solo developer passionate about the intersection of AI and mobile development.</p>
-                    <p class="about-text">The name "Iteratim" comes from the Latin word for "repeatedly" — reflecting
-                        our philosophy of continuous improvement, using AI to accelerate development while refining each
-                        app until it's just right.</p>
-                    <div class="about-philosophy">
-                        <h3>Our Approach</h3>
-                        <ul class="philosophy-list">
-                            <li><span class="philosophy-icon">✦</span><span><strong>AI-enhanced development</strong> —
-                                    leveraging cutting-edge AI tools to build faster and smarter</span></li>
-                            <li><span class="philosophy-icon">✦</span><span><strong>Intelligent features</strong> —
-                                    integrating AI/ML capabilities into apps</span></li>
-                            <li><span class="philosophy-icon">✦</span><span><strong>Modern tech stack</strong> — Swift,
-                                    Kotlin, React Native, and AI frameworks</span></li>
-                            <li><span class="philosophy-icon">✦</span><span><strong>Open to collaboration</strong> —
-                                    interested in AI-powered projects</span></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="about-visual">
-                    <div class="services-grid" id="services-grid"></div>
-                </div>
-            </div>
+    <section class="scene" data-scene="2" data-align="right">
+      <div class="scene-inner">
+        <div></div>
+        <div class="scene-copy">
+          <div class="scene-caption">03 · Capability</div>
+          <h1 class="hero-title">Built around<br><em>multimodal AI,</em><br>cross-platform.</h1>
+          <p class="hero-sub">Multimodal LLMs for understanding. Vision for parsing the real world. React Native and Flutter for speed to both stores.</p>
         </div>
+      </div>
     </section>
 
-    <section class="contact" id="contact">
-        <div class="container">
-            <div class="contact-wrapper">
-                <div class="contact-info">
-                    <span class="section-label">Get in Touch</span>
-                    <h2 class="section-title">Let's Build<br>Something Great</h2>
-                    <p class="contact-text">Got an idea or project? Whether you're looking for a development partner or
-                        just want to say hello, I'd love to hear from you.</p>
-                    <a href="mailto:contact@iteratim.io" class="contact-email">contact@iteratim.io</a>
-                </div>
-                <div class="contact-form-wrapper">
-                    <form class="contact-form" id="contact-form">
-                        <div class="form-group"><label for="name">Name</label><input type="text" id="name" name="name"
-                                placeholder="Your name" required></div>
-                        <div class="form-group"><label for="email">Email</label><input type="email" id="email"
-                                name="email" placeholder="your@email.com" required></div>
-                        <div class="form-group"><label for="message">Message</label><textarea id="message"
-                                name="message" placeholder="Tell me about your project..." rows="5" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-full"><span>Send Message</span></button>
-                    </form>
-                </div>
-            </div>
+    <section class="scene" data-scene="3" data-align="center">
+      <div class="scene-inner">
+        <div class="scene-copy">
+          <div class="scene-caption">04 · Work</div>
+          <h1 class="hero-title">Two apps<br>in the <em>orbit.</em></h1>
+          <p class="hero-sub">Seshy is live on the App Store. Trainadapt is coming soon. Keep scrolling.</p>
+          <div class="hero-ctas">
+            <a class="btn btn-primary" href="#work">Explore the work <span class="arr">↓</span></a>
+          </div>
         </div>
+      </div>
     </section>
+  </div>
+</section>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand"><a href="#hero" class="footer-logo"><span
-                            class="logo-icon">◆</span><span>Iteratim Studios</span></a>
-                    <p>Building AI-powered apps, one iteration at a time.</p>
-                </div>
-                <div class="footer-links">
-                    <a href="index.html#projects">Projects</a>
-                    <a href="index.html#about">About</a>
-                    <a href="index.html#contact">Contact</a>
-                    <a href="support.html">Support</a>
-                </div>
-            </div>
+<!-- scene progress rail -->
+<div class="scene-rail" id="sceneRail">
+  <button data-goto="0" class="on" aria-label="Studio"><span class="lbl">Studio</span><span class="bar"></span></button>
+  <button data-goto="1" aria-label="Method"><span class="lbl">Method</span><span class="bar"></span></button>
+  <button data-goto="2" aria-label="Capability"><span class="lbl">Capability</span><span class="bar"></span></button>
+  <button data-goto="3" aria-label="Work"><span class="lbl">Work</span><span class="bar"></span></button>
+</div>
+
+<!-- STRIP -->
+<div class="strip">
+  <div class="strip-track">
+    <span>React Native</span><span>Flutter</span><span>Multimodal LLMs</span><span>Vision &amp; OCR</span><span>Voice &amp; speech</span><span>On-device inference</span><span>Offline-first</span><span>Supabase</span><span>RevenueCat</span>
+    <span>React Native</span><span>Flutter</span><span>Multimodal LLMs</span><span>Vision &amp; OCR</span><span>Voice &amp; speech</span><span>On-device inference</span><span>Offline-first</span><span>Supabase</span><span>RevenueCat</span>
+  </div>
+</div>
+
+<!-- WORK — stacked vertical project scenes -->
+<section class="projects" id="work" style="padding:140px 0 60px">
+  <div class="wrap">
+    <div class="projects-head">
+      <div>
+        <span class="sec-label reveal">Selected work</span>
+        <h2 class="sec-title reveal d1">Two apps in the<br>Iteratim <em>orbit.</em></h2>
+      </div>
+      <p class="sec-kicker reveal d2">Each app has local support and privacy details here. Seshy terms are live now; Trainadapt will add release-specific terms closer to launch.</p>
+    </div>
+  </div>
+</section>
+
+<section class="proj-scene">
+  <div class="wrap">
+    <div class="card" style="--glow:rgba(120,90,255,.32)">
+      <div class="icon reveal"><img src="assets/images/seshy-icon.png" alt="Seshy app icon" loading="lazy"></div>
+      <div class="copy reveal d1">
+        <span class="num">01 — Seshy</span>
+        <span class="status live"><span class="s-dot"></span>Live on the App Store</span>
+        <h3>The workout<br><em>content studio.</em></h3>
+        <p class="tagline">Scan a whiteboard or logbook. Seshy reads it with a multimodal LLM, turns it into structured workouts, and overlays splits, heart rate, and PRs on shareable stories — in seconds.</p>
+        <div class="links">
+          <a class="plink" href="support.html#seshy">Support <span class="arr">↗</span></a>
+          <a class="plink" href="privacy.html#seshy">Privacy <span class="arr">↗</span></a>
+          <a class="plink" href="terms-seshy.html">Terms <span class="arr">↗</span></a>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Iteratim Studios. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="proj-scene flip">
+  <div class="wrap">
+    <div class="card" style="--glow:rgba(0,212,170,.32)">
+      <div class="icon reveal"><img src="assets/images/trainadapt-icon.png" alt="Trainadapt app icon" loading="lazy"></div>
+      <div class="copy reveal d1">
+        <span class="num">02 — Trainadapt</span>
+        <span class="status soon"><span class="s-dot"></span>Coming soon</span>
+        <h3>The personal<br>AI <em>training architect.</em></h3>
+        <p class="tagline">An offline-first coach that plans multi-week programs around your goals, gear, schedule, and injuries — then adapts every week based on how it actually went.</p>
+        <div class="links">
+          <a class="plink" href="support.html#trainadapt">Support <span class="arr">↗</span></a>
+          <a class="plink" href="privacy.html#trainadapt">Privacy <span class="arr">↗</span></a>
         </div>
-        </div>
-    </footer>
-    <script src="script.js"></script>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APPROACH -->
+<section class="section approach" id="approach">
+  <div class="wrap">
+    <div class="app-grid">
+      <div class="app-body">
+        <span class="sec-label reveal">The studio</span>
+        <h2 class="sec-title reveal d1">The name is<br>a <em>methodology.</em></h2>
+        <p class="reveal d2">Iteratim comes from the Latin for <em>repeatedly</em> — our conviction that great software is found, not written. Every feature ships, gets used, gets reshaped.</p>
+        <p class="reveal d3"><span class="hl">We build what people thought was out of reach,</span> then keep compounding on it. AI is the leverage that makes that rhythm real — faster prototypes, tighter loops, smarter features inside the product itself.</p>
+      </div>
+      <div class="pillars">
+        <div class="pillar reveal d1"><span class="idx">01</span><div><h4>AI as the engine, not the ad</h4><p>Multimodal LLMs and vision disappear into features that feel intuitive, not clever.</p></div></div>
+        <div class="pillar reveal d2"><span class="idx">02</span><div><h4>Cross-platform by default</h4><p>React Native and Flutter, so iOS and Android ship from one codebase — without looking like web in a wrapper.</p></div></div>
+        <div class="pillar reveal d3"><span class="idx">03</span><div><h4>Ship, learn, iterate</h4><p>Small releases, real users, steady rewrites. The name is the methodology.</p></div></div>
+        <div class="pillar reveal d4"><span class="idx">04</span><div><h4>Privacy as a feature</h4><p>No ads, no tracking, no selling data. Subscriptions that fund the work.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section services" id="services">
+  <div class="wrap">
+    <div class="svc-head">
+      <div>
+        <span class="sec-label reveal">Services</span>
+        <h2 class="sec-title reveal d1">What we <em>actually</em> build.</h2>
+      </div>
+      <p class="sec-kicker reveal d2">We take on a small roster of outside projects — mostly AI-flavored iOS work where craft matters as much as the feature set.</p>
+    </div>
+
+    <div class="svc-grid">
+      <div class="svc reveal d1">
+        <span class="svc-num">01</span>
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" width="32" height="32"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M10 18h4"/></svg></div>
+        <h4>Cross-platform <em>mobile</em></h4>
+        <p>React Native and Flutter builds, tuned so the app feels native — animations, HealthKit, and offline-first included.</p>
+      </div>
+      <div class="svc reveal d2">
+        <span class="svc-num">02</span>
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" width="32" height="32"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M22 12h-3M5 12H2"/><path d="M19 5l-2 2M7 17l-2 2M19 19l-2-2M7 7L5 5"/></svg></div>
+        <h4>Multimodal <em>AI</em></h4>
+        <p>Vision, voice, and LLMs wired into product flows. Structured outputs, retries, evals — the boring parts that make the cool parts feel reliable.</p>
+      </div>
+      <div class="svc reveal d3">
+        <span class="svc-num">03</span>
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" width="32" height="32"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3 9h18"/></svg></div>
+        <h4>Product <em>&amp; UX</em></h4>
+        <p>From prototype to store. Interaction, motion, onboarding, paywalls — all tuned to the specific product.</p>
+      </div>
+      <div class="svc reveal d4">
+        <span class="svc-num">04</span>
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" width="32" height="32"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg></div>
+        <h4>Launch <em>&amp; grow</em></h4>
+        <p>Store submission, privacy paperwork, subscriptions, analytics that don't leak data.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section contact" id="contact">
+  <div class="wrap">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <span class="sec-label reveal">Get in touch</span>
+        <h2 class="sec-title reveal d1">Let's build<br>something <em>worth</em><br>shipping.</h2>
+        <p class="reveal d2">Project inquiry, press, or a question about Seshy or Trainadapt — all welcome.</p>
+        <a class="contact-email reveal d3" href="mailto:contact@iteratim.io">contact@iteratim.io</a>
+      </div>
+      <form class="form reveal d2" id="contact-form">
+        <div class="field"><label for="name">Name</label><input type="text" id="name" name="name" placeholder="Your name" required></div>
+        <div class="field"><label for="email">Email</label><input type="email" id="email" name="email" placeholder="your@email.com" required></div>
+        <div class="field"><label for="message">Project</label><textarea id="message" name="message" placeholder="A few lines about what you want to build…" rows="4" required></textarea></div>
+        <button class="btn-submit" type="submit"><span>Send message</span> <span class="arr">→</span></button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="brand" href="#top">
+          <svg class="brand-logo" viewBox="0 0 32 32" fill="none">
+            <rect x="3" y="3" width="26" height="26" rx="5" stroke="#00d4aa" stroke-width="1.3" opacity=".5"/>
+            <rect x="7" y="7" width="18" height="18" rx="4" stroke="#00d4aa" stroke-width="1.3" transform="rotate(12 16 16)" opacity=".75"/>
+            <rect x="11" y="11" width="10" height="10" rx="2.5" fill="#00d4aa" transform="rotate(24 16 16)"/>
+          </svg>
+          <span class="brand-name">iteratim</span>
+        </a>
+        <p>Building AI-powered apps, one iteration at a time. Iteratim LLC.</p>
+      </div>
+      <div class="foot-col"><h5>Apps</h5><a href="support.html#seshy">Seshy</a><a href="support.html#trainadapt">Trainadapt</a></div>
+      <div class="foot-col"><h5>Studio</h5><a href="#approach">Approach</a><a href="#services">Services</a><a href="#contact">Contact</a></div>
+      <div class="foot-col"><h5>Legal</h5><a href="privacy.html">Privacy policy</a><a href="terms-seshy.html">Seshy Terms</a><a href="support.html">Support</a></div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Iteratim LLC</span><span>admin@iteratim.io</span><span>Crafted with care</span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
 </body>
-
 </html>
