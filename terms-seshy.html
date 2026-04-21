@@ -13,35 +13,54 @@
 </head>
 <body data-page="terms-seshy">
 
-<nav class="nav">
-  <div class="nav-inner">
+<nav class="nav" id="nav">
+  <div class="nav-pill">
     <a class="brand" href="index.html">
-      <svg class="logo" viewBox="0 0 32 32" fill="none">
-        <rect x="3" y="3" width="26" height="26" rx="5" stroke="#00d4aa" stroke-width="1.3" opacity=".5"/>
-        <rect x="7" y="7" width="18" height="18" rx="4" stroke="#00d4aa" stroke-width="1.3" transform="rotate(12 16 16)" opacity=".75"/>
-        <rect x="11" y="11" width="10" height="10" rx="2.5" fill="#00d4aa" transform="rotate(24 16 16)"/>
+      <svg class="brand-logo" viewBox="0 0 40 20" fill="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="logoGoldTermNav" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#fff5d4"/>
+            <stop offset="50%" stop-color="#f3d089"/>
+            <stop offset="100%" stop-color="#c89540"/>
+          </linearGradient>
+          <filter id="logoGlowTermNav" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="0.6"/>
+          </filter>
+        </defs>
+        <path id="ribbonPathTermNav"
+              d="M 6 10 C 6 3, 14 3, 20 10 C 26 17, 34 17, 34 10 C 34 3, 26 3, 20 10 C 14 17, 6 17, 6 10 Z"
+              stroke="#ffffff" stroke-width="1.6"
+              stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>
+        <circle cx="20" cy="10" r="2.1" fill="url(#logoGoldTermNav)"/>
+        <circle cx="19.3" cy="9.3" r="0.6" fill="#fff9e3" opacity=".85"/>
+        <circle r="1.25" fill="url(#logoGoldTermNav)" filter="url(#logoGlowTermNav)">
+          <animateMotion dur="6s" repeatCount="indefinite" rotate="auto">
+            <mpath href="#ribbonPathTermNav"/>
+          </animateMotion>
+        </circle>
       </svg>
       <span class="brand-name">iteratim</span>
     </a>
+    <span class="nav-divider" aria-hidden="true"></span>
     <div class="nav-links">
-      <a href="index.html#work">Work</a>
+      <a href="index.html#apps">Apps</a>
       <a href="index.html#approach">Approach</a>
       <a href="support.html">Support</a>
       <a href="privacy.html">Privacy</a>
-      <a href="index.html#contact">Contact</a>
     </div>
+    <a class="nav-cta" href="index.html#contact">Contact →</a>
   </div>
 </nav>
 
 <header class="hdr">
   <div class="hdr-inner">
-    <div class="crumb"><a href="index.html">Iteratim</a> · <a href="index.html#work">Seshy</a> · Terms of Service</div>
+    <div class="crumb"><a href="index.html">Iteratim</a> · <a href="index.html#apps">Seshy</a> · Terms of Service</div>
     <h1>Seshy<br><em>Terms of Service</em></h1>
     <div class="meta">
       <div><span class="k">Effective</span>April 17, 2026</div>
       <div><span class="k">Version</span>1.0 draft</div>
       <div><span class="k">Publisher</span>Iteratim LLC</div>
-      <div><span class="k">Contact</span><a href="mailto:admin@iteratim.io">admin@iteratim.io</a></div>
+      <div><span class="k">Contact</span><a href="mailto:contact@iteratim.io">contact@iteratim.io</a></div>
     </div>
   </div>
 </header>
@@ -117,7 +136,7 @@
       <h2><span class="n">§ 04</span>Accounts and Guest Use</h2>
       <p>You may use parts of Seshy without creating or connecting a permanent account. Guest use may store workouts, drafts, settings, export files, and usage counters locally on your device.</p>
       <p>Local-only data may be lost if you delete Seshy, clear app data, change devices, or lose access to your device. Connecting an account may allow some data to be backed up, migrated, restored, or synced, depending on the features available at the time.</p>
-      <p>You are responsible for keeping your account credentials, device, and sign-in methods secure. Tell us promptly at <a href="mailto:admin@iteratim.io">admin@iteratim.io</a> if you believe your account or device has been compromised.</p>
+      <p>You are responsible for keeping your account credentials, device, and sign-in methods secure. Tell us promptly at <a href="mailto:contact@iteratim.io">contact@iteratim.io</a> if you believe your account or device has been compromised.</p>
     </section>
 
     <section id="s5">
@@ -194,7 +213,7 @@
 
     <section id="s12">
       <h2><span class="n">§ 12</span>Copyright Concerns and Removal</h2>
-      <p>If you believe content in Seshy infringes your copyright or other rights, email <a href="mailto:admin@iteratim.io">admin@iteratim.io</a> with your contact information, a description of the work, the location of the content in Seshy, and a statement that you have a good-faith belief the use is unauthorized. We will review and act on valid notices, which may include removing the content and, for repeat offenders, restricting or terminating accounts.</p>
+      <p>If you believe content in Seshy infringes your copyright or other rights, email <a href="mailto:contact@iteratim.io">contact@iteratim.io</a> with your contact information, a description of the work, the location of the content in Seshy, and a statement that you have a good-faith belief the use is unauthorized. We will review and act on valid notices, which may include removing the content and, for repeat offenders, restricting or terminating accounts.</p>
     </section>
 
     <section id="s13">
@@ -212,7 +231,7 @@
 
     <section id="s15">
       <h2><span class="n">§ 15</span>Termination</h2>
-      <p>You may stop using Seshy at any time. You may delete local app data through your device controls and may request account deletion through available account deletion flows or by contacting <a href="mailto:admin@iteratim.io">admin@iteratim.io</a>.</p>
+      <p>You may stop using Seshy at any time. You may delete local app data through your device controls and may request account deletion through available account deletion flows or by contacting <a href="mailto:contact@iteratim.io">contact@iteratim.io</a>.</p>
       <p>We will process verified account deletion requests within 30 days, subject to legal retention obligations such as tax records, fraud prevention, security investigations, dispute handling, or other records we are required or permitted to keep.</p>
       <p>We may suspend, restrict, or terminate your access to Seshy if we reasonably believe that you violated these Terms, created legal or security risk, abused the Service, harmed another user, or used Seshy in a way that could damage Iteratim, the Service, platform relationships, or other users.</p>
       <p>Sections that by their nature should survive termination will survive, including sections on ownership, payments already incurred, disclaimers, liability limits, disputes, and applicable legal rights.</p>
@@ -256,7 +275,7 @@
         <p>This section may require you and Iteratim to resolve disputes through individual arbitration instead of in court, and it may limit class actions, class arbitrations, and jury trials.</p>
       </div>
       <h3>Informal Resolution First</h3>
-      <p>Before starting arbitration or a court case, you and Iteratim agree to try to resolve the dispute informally. Send a written notice to <a href="mailto:admin@iteratim.io">admin@iteratim.io</a> with your name, account email if applicable, a description of the dispute, and the relief you want. We will try to resolve the dispute within 30 days after receiving the notice.</p>
+      <p>Before starting arbitration or a court case, you and Iteratim agree to try to resolve the dispute informally. Send a written notice to <a href="mailto:contact@iteratim.io">contact@iteratim.io</a> with your name, account email if applicable, a description of the dispute, and the relief you want. We will try to resolve the dispute within 30 days after receiving the notice.</p>
       <h3>Arbitration Agreement</h3>
       <p>If a dispute is not resolved informally, you and Iteratim agree that any dispute, claim, or controversy arising out of or relating to Seshy or these Terms will be resolved by binding individual arbitration, except for the carveouts below. The arbitration will be administered by the American Arbitration Association under its Consumer Arbitration Rules, unless another arbitration provider or process is required by law or agreed by both sides. The arbitration will be conducted in English. If an in-person hearing is required, it will take place in Texas unless the arbitrator decides otherwise.</p>
       <h3>Carveouts</h3>
@@ -266,7 +285,7 @@
       <h3>Jury Trial Waiver</h3>
       <p>If a claim proceeds in court instead of arbitration, you and Iteratim waive any right to a jury trial to the fullest extent allowed by law.</p>
       <h3>Opt-Out</h3>
-      <p>You may opt out of this arbitration agreement within <strong>30 days</strong> after you first accept these Terms by emailing <a href="mailto:admin@iteratim.io">admin@iteratim.io</a> with the subject line "Arbitration Opt-Out" and including your name, account email if applicable, and a clear statement that you want to opt out of arbitration for Seshy. Opting out of arbitration does not opt you out of any other part of these Terms.</p>
+      <p>You may opt out of this arbitration agreement within <strong>30 days</strong> after you first accept these Terms by emailing <a href="mailto:contact@iteratim.io">contact@iteratim.io</a> with the subject line "Arbitration Opt-Out" and including your name, account email if applicable, and a clear statement that you want to opt out of arbitration for Seshy. Opting out of arbitration does not opt you out of any other part of these Terms.</p>
       <h3>Court Venue for Non-Arbitrated Claims</h3>
       <p>For claims that are not subject to arbitration, you and Iteratim consent to the exclusive jurisdiction and venue of the state and federal courts located in Texas, except where mandatory law requires another venue.</p>
     </section>
@@ -288,7 +307,7 @@
     <section id="s23">
       <h2><span class="n">§ 23</span>Contact</h2>
       <p>For questions about these Terms, contact:</p>
-      <p><strong>Iteratim LLC</strong><br>Email: <a href="mailto:admin@iteratim.io">admin@iteratim.io</a></p>
+      <p><strong>Iteratim LLC</strong><br>Email: <a href="mailto:contact@iteratim.io">contact@iteratim.io</a></p>
       <a class="back" href="index.html">← Back to Iteratim</a>
     </section>
   </article>
@@ -298,7 +317,7 @@
   <div class="foot-inner">
     <span>© 2026 Iteratim LLC</span>
     <span><a href="support.html">Support</a> · <a href="privacy.html">Privacy</a> · <a href="terms-seshy.html">Seshy Terms</a></span>
-    <span>admin@iteratim.io</span>
+    <span>contact@iteratim.io</span>
   </div>
 </footer>
 

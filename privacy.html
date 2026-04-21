@@ -12,18 +12,41 @@
 <body data-page="privacy">
 
 <nav class="nav" id="nav">
-  <div class="wrap">
+  <div class="nav-pill">
     <a class="brand" href="index.html">
-      <span class="mark"><svg viewBox="0 0 22 22"><path d="M11 1 L21 11 L11 21 L1 11 Z" fill="none" stroke="#00d4aa" stroke-width="1.5"/><circle cx="11" cy="11" r="3" fill="#00d4aa"/></svg></span>
-      <span class="brand-name"><em>i</em>teratim</span>
+      <svg class="brand-logo" viewBox="0 0 40 20" fill="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="logoGoldPrivNav" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#fff5d4"/>
+            <stop offset="50%" stop-color="#f3d089"/>
+            <stop offset="100%" stop-color="#c89540"/>
+          </linearGradient>
+          <filter id="logoGlowPrivNav" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="0.6"/>
+          </filter>
+        </defs>
+        <path id="ribbonPathPrivNav"
+              d="M 6 10 C 6 3, 14 3, 20 10 C 26 17, 34 17, 34 10 C 34 3, 26 3, 20 10 C 14 17, 6 17, 6 10 Z"
+              stroke="#ffffff" stroke-width="1.6"
+              stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>
+        <circle cx="20" cy="10" r="2.1" fill="url(#logoGoldPrivNav)"/>
+        <circle cx="19.3" cy="9.3" r="0.6" fill="#fff9e3" opacity=".85"/>
+        <circle r="1.25" fill="url(#logoGoldPrivNav)" filter="url(#logoGlowPrivNav)">
+          <animateMotion dur="6s" repeatCount="indefinite" rotate="auto">
+            <mpath href="#ribbonPathPrivNav"/>
+          </animateMotion>
+        </circle>
+      </svg>
+      <span class="brand-name">iteratim</span>
     </a>
+    <span class="nav-divider" aria-hidden="true"></span>
     <div class="nav-links">
-      <a href="index.html#work">Work</a>
-      <a href="index.html#approach">Studio</a>
-      <a href="index.html#services">Services</a>
+      <a href="index.html#apps">Apps</a>
+      <a href="index.html#approach">Approach</a>
+      <a href="privacy.html">Privacy</a>
       <a href="support.html">Support</a>
-      <a class="nav-cta" href="index.html#contact">Say hello →</a>
     </div>
+    <a class="nav-cta" href="index.html#contact">Contact →</a>
   </div>
 </nav>
 
@@ -34,14 +57,14 @@
       <span class="sep">/</span>
       <span>Legal</span>
       <span class="sep">/</span>
-      <span style="color:var(--teal)">Privacy policy</span>
+      <span style="color:var(--accent)">Privacy policy</span>
     </div>
     <h1><em>Privacy,</em><br>in plain<br>language.</h1>
     <div class="p-meta">
       <div><span class="k">Effective</span><span class="v">April 17, 2026</span></div>
       <div><span class="k">Version</span><span class="v">1.0</span></div>
-      <div><span class="k">Covers</span><span class="v">Seshy · Trainadapt</span></div>
-      <div><span class="k">Contact</span><span class="v">admin@iteratim.io</span></div>
+      <div><span class="k">Covers</span><span class="v">Seshy · TrainAdapt</span></div>
+      <div><span class="k">Contact</span><span class="v">contact@iteratim.io</span></div>
     </div>
   </div>
 </section>
@@ -69,7 +92,7 @@
         <div class="tabs" role="tablist">
           <button class="tab on" data-tab="umbrella">Iteratim (umbrella)</button>
           <button class="tab" data-tab="seshy">Seshy</button>
-          <button class="tab" data-tab="trainadapt">Trainadapt</button>
+          <button class="tab" data-tab="trainadapt">TrainAdapt</button>
         </div>
 
         <!-- UMBRELLA PANEL -->
@@ -85,13 +108,13 @@
                 </button>
                 <div class="acc-body" style="max-height:999px">
                   <div class="acc-body-inner">
-                    <p>This is the umbrella privacy policy for <strong>Iteratim LLC</strong>. It covers the apps we make — currently <strong>Seshy</strong> and <strong>Trainadapt</strong> — plus our websites and related services.</p>
+                    <p>This is the umbrella privacy policy for <strong>Iteratim LLC</strong>. It covers the apps we make — currently <strong>Seshy</strong> and <strong>TrainAdapt</strong> — plus our websites and related services.</p>
                     <ul>
                       <li>We <strong>don't sell</strong> your personal information.</li>
                       <li>We <strong>don't use</strong> health data for ads or cross-app tracking.</li>
                       <li>Your on-device data <strong>stays on your device</strong> unless you sync or export it.</li>
                       <li>AI features only run when <strong>you choose them</strong> — scans, coaching, etc.</li>
-                      <li>You can request access, deletion, or a copy of your data any time: <a href="mailto:admin@iteratim.io">admin@iteratim.io</a>.</li>
+                      <li>You can request access, deletion, or a copy of your data any time: <a href="mailto:contact@iteratim.io">contact@iteratim.io</a>.</li>
                     </ul>
                     <div class="callout">
                       <b>Not legal advice</b>
@@ -104,7 +127,7 @@
           </section>
 
           <section id="s-collect" class="acc-section" style="margin-top:60px">
-            <h2 style="font-family:var(--serif);font-weight:400;font-size:40px;letter-spacing:-.02em;margin-bottom:18px">01 — What <em style="color:var(--teal);font-style:italic">we collect</em></h2>
+            <h2 style="font-family:var(--serif);font-weight:400;font-size:40px;letter-spacing:-.02em;margin-bottom:18px">01 — What <em style="color:var(--accent);font-style:italic">we collect</em></h2>
             <div class="acc">
               <div class="acc-item">
                 <button class="acc-head"><span class="acc-num">1.1</span><span class="acc-title">Account &amp; profile information</span><span class="acc-chev"></span></button>
@@ -132,7 +155,7 @@
                 <button class="acc-head"><span class="acc-num">1.3</span><span class="acc-title">Health &amp; fitness data</span><span class="acc-chev"></span></button>
                 <div class="acc-body"><div class="acc-body-inner">
                   <p>Health integrations are <strong>optional</strong>. With your permission, <strong>Seshy</strong> may read workout data from Apple Health, HealthKit, or Health Connect — workout sessions, heart rate samples and zones, calories, distance.</p>
-                  <p><strong>Trainadapt</strong> may ask for height, weight, sex/gender, date of birth or age, body type, injuries, movement restrictions, sleep, stress, and recovery indicators so it can generate coaching.</p>
+                  <p><strong>TrainAdapt</strong> may ask for height, weight, sex/gender, date of birth or age, body type, injuries, movement restrictions, sleep, stress, and recovery indicators so it can generate coaching.</p>
                   <p>This information may be considered <em>sensitive</em> under some privacy laws. We don't use it for advertising, sale, marketing, cross-app tracking, or profiling.</p>
                 </div></div>
               </div>
@@ -141,7 +164,7 @@
                 <button class="acc-head"><span class="acc-num">1.4</span><span class="acc-title">AI &amp; OCR processing</span><span class="acc-chev"></span></button>
                 <div class="acc-body"><div class="acc-body-inner">
                   <p>When you scan a workout whiteboard in <strong>Seshy</strong>, the image is sent to Google Gemini / Google AI so the app can convert it into structured workout data. Seshy doesn't retain the original image after parsing in normal use.</p>
-                  <p><strong>Trainadapt</strong> may send relevant profile, workout, and feedback data to OpenAI or Google Gemini (where enabled) to generate programs, adapt workouts, and provide coaching recommendations. It may also use Langfuse for AI observability and debugging.</p>
+                  <p><strong>TrainAdapt</strong> may send relevant profile, workout, and feedback data to OpenAI or Google Gemini (where enabled) to generate programs, adapt workouts, and provide coaching recommendations. It may also use Langfuse for AI observability and debugging.</p>
                   <p>If you submit OCR feedback and choose to include the source image, we may store it for debugging and product improvement.</p>
                 </div></div>
               </div>
@@ -166,7 +189,7 @@
           </section>
 
           <section id="s-use" class="acc-section" style="margin-top:60px">
-            <h2 style="font-family:var(--serif);font-weight:400;font-size:40px;letter-spacing:-.02em;margin-bottom:18px">02 — How <em style="color:var(--teal);font-style:italic">we use it</em></h2>
+            <h2 style="font-family:var(--serif);font-weight:400;font-size:40px;letter-spacing:-.02em;margin-bottom:18px">02 — How <em style="color:var(--accent);font-style:italic">we use it</em></h2>
             <div class="acc">
               <div class="acc-item">
                 <button class="acc-head"><span class="acc-num">2.1</span><span class="acc-title">Running the apps</span><span class="acc-chev"></span></button>
@@ -175,10 +198,10 @@
                     <li>Provide, operate, secure, and maintain our apps</li>
                     <li>Create and manage accounts, authentication, entitlements, subscriptions</li>
                     <li>Scan workout images and parse AI-assisted results when you choose them</li>
-                    <li>Generate, personalize, and adapt training programs in Trainadapt</li>
+                    <li>Generate, personalize, and adapt training programs in TrainAdapt</li>
                     <li>Save, edit, back up, migrate, export, and share workout content</li>
                     <li>Provide local drafts, guest history, account-backed history, restores</li>
-                    <li>Send push notifications (Trainadapt) if you enable them</li>
+                    <li>Send push notifications (TrainAdapt) if you enable them</li>
                   </ul>
                 </div></div>
               </div>
@@ -198,7 +221,7 @@
           </section>
 
           <section id="s-share" class="acc-section" style="margin-top:60px">
-            <h2 style="font-family:var(--serif);font-weight:400;font-size:40px;letter-spacing:-.02em;margin-bottom:18px">03 — Who <em style="color:var(--teal);font-style:italic">we share with</em></h2>
+            <h2 style="font-family:var(--serif);font-weight:400;font-size:40px;letter-spacing:-.02em;margin-bottom:18px">03 — Who <em style="color:var(--accent);font-style:italic">we share with</em></h2>
             <div class="acc">
               <div class="acc-item">
                 <button class="acc-head"><span class="acc-num">3.1</span><span class="acc-title">Service providers</span><span class="acc-chev"></span></button>
@@ -211,10 +234,10 @@
                       <tr><td>RevenueCat</td><td>Purchase validation, subscriptions, entitlements, restores</td></tr>
                       <tr><td>PostHog</td><td>Product analytics, funnel events, feature usage</td></tr>
                       <tr><td>Sentry</td><td>Crash reporting, diagnostics, sanitized logs</td></tr>
-                      <tr><td>Google Gemini / Google AI</td><td>Seshy OCR + Trainadapt AI programs where enabled</td></tr>
-                      <tr><td>OpenAI</td><td>Trainadapt AI program generation, summaries, recommendations</td></tr>
-                      <tr><td>Langfuse</td><td>Trainadapt AI observability, prompt/response logging</td></tr>
-                      <tr><td>Expo</td><td>Trainadapt platform services + push notifications</td></tr>
+                      <tr><td>Google Gemini / Google AI</td><td>Seshy OCR + TrainAdapt AI programs where enabled</td></tr>
+                      <tr><td>OpenAI</td><td>TrainAdapt AI program generation, summaries, recommendations</td></tr>
+                      <tr><td>Langfuse</td><td>TrainAdapt AI observability, prompt/response logging</td></tr>
+                      <tr><td>Expo</td><td>TrainAdapt platform services + push notifications</td></tr>
                       <tr><td>Apple App Store</td><td>iOS distribution, IAP, Sign in with Apple, HealthKit</td></tr>
                       <tr><td>Google Play</td><td>Android distribution, purchases, Health Connect</td></tr>
                     </tbody>
@@ -231,7 +254,7 @@
           </section>
 
           <section id="s-rights" class="acc-section" style="margin-top:60px">
-            <h2 style="font-family:var(--serif);font-weight:400;font-size:40px;letter-spacing:-.02em;margin-bottom:18px">04 — Your <em style="color:var(--teal);font-style:italic">rights</em></h2>
+            <h2 style="font-family:var(--serif);font-weight:400;font-size:40px;letter-spacing:-.02em;margin-bottom:18px">04 — Your <em style="color:var(--accent);font-style:italic">rights</em></h2>
             <div class="acc">
               <div class="acc-item">
                 <button class="acc-head"><span class="acc-num">4.1</span><span class="acc-title">Choices &amp; controls</span><span class="acc-chev"></span></button>
@@ -263,14 +286,14 @@
                     <li>Appeal a privacy-rights decision</li>
                     <li>Lodge a complaint with a data protection authority</li>
                   </ul>
-                  <p>To exercise any of these, email <a href="mailto:admin@iteratim.io">admin@iteratim.io</a>. We may verify your request before acting. We won't discriminate against you for exercising rights.</p>
+                  <p>To exercise any of these, email <a href="mailto:contact@iteratim.io">contact@iteratim.io</a>. We may verify your request before acting. We won't discriminate against you for exercising rights.</p>
                 </div></div>
               </div>
             </div>
           </section>
 
           <section id="s-legal" class="acc-section" style="margin-top:60px">
-            <h2 style="font-family:var(--serif);font-weight:400;font-size:40px;letter-spacing:-.02em;margin-bottom:18px">05 — Legal <em style="color:var(--teal);font-style:italic">details</em></h2>
+            <h2 style="font-family:var(--serif);font-weight:400;font-size:40px;letter-spacing:-.02em;margin-bottom:18px">05 — Legal <em style="color:var(--accent);font-style:italic">details</em></h2>
             <div class="acc">
               <div class="acc-item">
                 <button class="acc-head"><span class="acc-num">5.1</span><span class="acc-title">Legal bases for processing</span><span class="acc-chev"></span></button>
@@ -304,7 +327,7 @@
                 <button class="acc-head"><span class="acc-num">5.4</span><span class="acc-title">Security</span><span class="acc-chev"></span></button>
                 <div class="acc-body"><div class="acc-body-inner">
                   <p>We use administrative, technical, and organizational safeguards — authentication, access controls, encryption in transit, row-level security for user-scoped cloud records, private storage buckets, log sanitization, and least-privilege operations.</p>
-                  <p>No system is perfectly secure. Keep your device, credentials, and app-store accounts secure. Tell us at <a href="mailto:admin@iteratim.io">admin@iteratim.io</a> if you suspect a compromise.</p>
+                  <p>No system is perfectly secure. Keep your device, credentials, and app-store accounts secure. Tell us at <a href="mailto:contact@iteratim.io">contact@iteratim.io</a> if you suspect a compromise.</p>
                 </div></div>
               </div>
               <div class="acc-item">
@@ -323,17 +346,17 @@
           </section>
 
           <section id="s-contact" class="acc-section" style="margin-top:60px">
-            <h2 style="font-family:var(--serif);font-weight:400;font-size:40px;letter-spacing:-.02em;margin-bottom:18px">06 — <em style="color:var(--teal);font-style:italic">Contact</em> us</h2>
+            <h2 style="font-family:var(--serif);font-weight:400;font-size:40px;letter-spacing:-.02em;margin-bottom:18px">06 — <em style="color:var(--accent);font-style:italic">Contact</em> us</h2>
             <div class="callout" style="padding:28px 30px;font-size:16px;line-height:1.7">
               <b>Privacy questions, requests, concerns</b>
-              <p style="margin-top:4px">Iteratim LLC<br>Email: <a href="mailto:admin@iteratim.io" style="color:var(--teal)">admin@iteratim.io</a></p>
+              <p style="margin-top:4px">Iteratim LLC<br>Email: <a href="mailto:contact@iteratim.io" style="color:var(--accent)">contact@iteratim.io</a></p>
             </div>
           </section>
         </div>
 
         <!-- SESHY PANEL -->
         <div class="panel" id="seshy" data-panel="seshy">
-          <h2 style="font-family:var(--serif);font-weight:400;font-size:48px;letter-spacing:-.02em;margin-bottom:14px">Seshy <em style="color:var(--teal);font-style:italic">specifics.</em></h2>
+          <h2 style="font-family:var(--serif);font-weight:400;font-size:48px;letter-spacing:-.02em;margin-bottom:14px">Seshy <em style="color:var(--accent);font-style:italic">specifics.</em></h2>
           <p style="color:var(--ink-2);margin-bottom:34px;max-width:60ch;font-size:16px">Seshy is a workout content studio for scanning, editing, saving, exporting, and sharing workouts. Here's what's different for Seshy in particular.</p>
           <div class="acc">
             <div class="acc-item open">
@@ -373,19 +396,19 @@
 
         <!-- TRAINADAPT PANEL -->
         <div class="panel" id="trainadapt" data-panel="trainadapt">
-          <h2 style="font-family:var(--serif);font-weight:400;font-size:48px;letter-spacing:-.02em;margin-bottom:14px">Trainadapt <em style="color:var(--teal);font-style:italic">specifics.</em></h2>
-          <p style="color:var(--ink-2);margin-bottom:34px;max-width:60ch;font-size:16px">Trainadapt is an offline-first AI training coach that creates and adapts multi-week programs. It handles more sensitive information, and it's transparent about it.</p>
+          <h2 style="font-family:var(--serif);font-weight:400;font-size:48px;letter-spacing:-.02em;margin-bottom:14px">TrainAdapt <em style="color:var(--accent);font-style:italic">specifics.</em></h2>
+          <p style="color:var(--ink-2);margin-bottom:34px;max-width:60ch;font-size:16px">TrainAdapt is an offline-first AI training coach that creates and adapts multi-week programs. It handles more sensitive information, and it's transparent about it.</p>
           <div class="acc">
             <div class="acc-item open">
               <button class="acc-head" aria-expanded="true"><span class="acc-num">T.1</span><span class="acc-title">Training profile</span><span class="acc-chev"></span></button>
               <div class="acc-body" style="max-height:999px"><div class="acc-body-inner">
-                <p>Trainadapt may process the profile you provide: fitness goals, preferred training styles, experience, fitness level, available equipment, weekly schedule, preferred workout length, training environment, units, timezone, sport activities, competition dates, and training priorities.</p>
+                <p>TrainAdapt may process the profile you provide: fitness goals, preferred training styles, experience, fitness level, available equipment, weekly schedule, preferred workout length, training environment, units, timezone, sport activities, competition dates, and training priorities.</p>
               </div></div>
             </div>
             <div class="acc-item">
               <button class="acc-head"><span class="acc-num">T.2</span><span class="acc-title">Health-adjacent &amp; recovery data</span><span class="acc-chev"></span></button>
               <div class="acc-body"><div class="acc-body-inner">
-                <p>Trainadapt may ask for height, weight, sex/gender, date of birth or age, body type, injuries, physical limitations, movement restrictions, recovery indicators, sleep, stress, and related context. Some of this may qualify as <em>sensitive personal information</em> or health data under some privacy laws, even though Trainadapt is a fitness product and not a medical service.</p>
+                <p>TrainAdapt may ask for height, weight, sex/gender, date of birth or age, body type, injuries, physical limitations, movement restrictions, recovery indicators, sleep, stress, and related context. Some of this may qualify as <em>sensitive personal information</em> or health data under some privacy laws, even though TrainAdapt is a fitness product and not a medical service.</p>
                 <div class="callout">
                   <b>Not medical advice</b>
                   AI-generated programs, summaries, and recommendations are informational only. Talk to a qualified professional before starting, changing, or continuing a training program — especially with an injury, medical condition, or health risk.
@@ -395,20 +418,20 @@
             <div class="acc-item">
               <button class="acc-head"><span class="acc-num">T.3</span><span class="acc-title">Workout logs &amp; AI coaching</span><span class="acc-chev"></span></button>
               <div class="acc-body"><div class="acc-body-inner">
-                <p>Trainadapt may process completed workouts, exercises, sets, reps, weights, duration, distance, RPE, completion status, skipped exercises/workouts, swaps, notes, PRs, program history, weekly feedback, training-block feedback, and AI-generated program plans, coaching summaries, adaptation notes, and training memory.</p>
-                <p>Trainadapt may send relevant profile, training, workout, and feedback data to <strong>OpenAI</strong> and <strong>Google Gemini / Google AI</strong> (where enabled) to generate programs, adapt workouts, and provide coaching. <strong>Langfuse</strong> is used for AI observability, reliability, and debugging. Trainadapt tracks your consent choices for sharing profile data with AI for coach analysis.</p>
+                <p>TrainAdapt may process completed workouts, exercises, sets, reps, weights, duration, distance, RPE, completion status, skipped exercises/workouts, swaps, notes, PRs, program history, weekly feedback, training-block feedback, and AI-generated program plans, coaching summaries, adaptation notes, and training memory.</p>
+                <p>TrainAdapt may send relevant profile, training, workout, and feedback data to <strong>OpenAI</strong> and <strong>Google Gemini / Google AI</strong> (where enabled) to generate programs, adapt workouts, and provide coaching. <strong>Langfuse</strong> is used for AI observability, reliability, and debugging. TrainAdapt tracks your consent choices for sharing profile data with AI for coach analysis.</p>
               </div></div>
             </div>
             <div class="acc-item">
               <button class="acc-head"><span class="acc-num">T.4</span><span class="acc-title">Authentication &amp; push</span><span class="acc-chev"></span></button>
               <div class="acc-body"><div class="acc-body-inner">
-                <p>Trainadapt may support email sign-in, Sign in with Apple, and Google authentication where enabled. If you enable notifications, Trainadapt may process a push notification token, notification preferences, and delivery metadata through Expo or platform services.</p>
+                <p>TrainAdapt may support email sign-in, Sign in with Apple, and Google authentication where enabled. If you enable notifications, TrainAdapt may process a push notification token, notification preferences, and delivery metadata through Expo or platform services.</p>
               </div></div>
             </div>
             <div class="acc-item">
               <button class="acc-head"><span class="acc-num">T.5</span><span class="acc-title">Offline-first &amp; local data</span><span class="acc-chev"></span></button>
               <div class="acc-body"><div class="acc-body-inner">
-                <p>Trainadapt workout logs, program data, and related records stored only on your device remain on your device until you sync them, delete them, delete the app, clear local app data, or use another supported removal flow. AI-generated plans, summaries, and memory are retained while your account is active or until you request deletion, subject to legal, security, and operational needs.</p>
+                <p>TrainAdapt workout logs, program data, and related records stored only on your device remain on your device until you sync them, delete them, delete the app, clear local app data, or use another supported removal flow. AI-generated plans, summaries, and memory are retained while your account is active or until you request deletion, subject to legal, security, and operational needs.</p>
               </div></div>
             </div>
           </div>
@@ -424,7 +447,7 @@
     <div class="foot-bottom">
       <span>© 2026 Iteratim LLC</span>
       <span><a href="support.html">Support</a> · <a href="index.html">Back to Iteratim</a></span>
-      <span>admin@iteratim.io</span>
+      <span>contact@iteratim.io</span>
     </div>
   </div>
 </footer>

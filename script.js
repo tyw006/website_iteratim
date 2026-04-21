@@ -1,6 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
   const page = document.body.dataset.page;
 
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('.brand-logo animateMotion').forEach(el => el.remove());
+  }
+
   initScrolledNav(page);
 
   if (page === 'home') {
@@ -19,7 +23,8 @@ function initScrolledNav(page) {
   const thresholds = {
     home: 40,
     privacy: 40,
-    support: 20
+    support: 20,
+    'terms-seshy': 20
   };
   const threshold = thresholds[page];
   if (typeof threshold !== 'number') return;
@@ -31,208 +36,162 @@ function initScrolledNav(page) {
 
 function initHomePage() {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const stage = document.querySelector('.hero-stage');
-  const hero = document.getElementById('heroObject');
-  const scenes = document.querySelectorAll('.scenes .scene');
-  const railBtns = document.querySelectorAll('.scene-rail button');
-  const bg = document.getElementById('stageBg');
-  const coreShape = document.getElementById('coreShape');
-  const coreGroup = document.getElementById('coreGroup');
-  const coreTag = document.getElementById('coreTag');
-  const trailMain = document.getElementById('trailMain');
-  const trailGhost = document.getElementById('trailGhost');
-  const attemptsG = document.getElementById('attempts');
-
-  if (
-    !stage ||
-    !hero ||
-    !scenes.length ||
-    !coreShape ||
-    !coreGroup ||
-    !coreTag ||
-    !trailMain ||
-    !trailGhost ||
-    !attemptsG ||
-    !bg
-  ) {
-    return;
-  }
-
-  const N = 28;
-  const attempts = [];
-  for (let i = 0; i < N; i += 1) {
-    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    circle.setAttribute('class', i % 5 === 4 ? 'attempt violet' : 'attempt');
-    attemptsG.appendChild(circle);
-    attempts.push(circle);
-  }
-
-  const jitter = (index, seed) => {
-    const value = Math.sin(index * 12.9898 + seed) * 43758.5453;
-    return value - Math.floor(value);
-  };
-
-  const shapes = [
-    'M 0 -34 C 19 -34 34 -19 34 0 C 34 19 19 34 0 34 C -19 34 -34 19 -34 0 C -34 -19 -19 -34 0 -34 Z',
-    'M 0 -30 C 22 -30 30 -22 30 0 C 30 22 22 30 0 30 C -22 30 -30 22 -30 0 C -30 -22 -22 -30 0 -30 Z',
-    'M 0 -34 L 34 0 L 0 34 L -34 0 Z',
-    'M -26 -26 L 26 -26 L 26 26 L -26 26 Z'
-  ];
-  const tagsByScene = ['v1 · attempt', 'v∞ · found', 'v∞ · right', 'v∞ · shipped'];
-  let currentScene = 0;
 
   if (prefersReducedMotion) {
-    scenes.forEach((scene, index) => scene.classList.toggle('in', index === 0));
-    railBtns.forEach((button, index) => button.classList.toggle('on', index === 0));
-    hero.style.setProperty('--hox', '0px');
-    hero.style.setProperty('--hoy', '0px');
-    hero.style.setProperty('--hoscale', '1');
-    hero.style.setProperty('--horot', '0deg');
+    document.documentElement.classList.add('no-morph');
+    document.body.style.setProperty('--op-0', '1');
+    document.body.style.setProperty('--op-1', '1');
+    document.body.style.setProperty('--op-2', '1');
+    document.body.style.setProperty('--pointer-0', 'auto');
+    document.body.style.setProperty('--pointer-1', 'auto');
+    document.body.style.setProperty('--pointer-2', 'auto');
+  } else {
+    initStageMorph();
   }
 
+  initProjectsSubCarousel();
+  initReveal();
+  initContactForm();
+  initHomeAnchorScroll();
+  initChapterDots();
+}
+
+function initStageMorph() {
+  const stage = document.querySelector('.stage');
+  const pin = document.querySelector('.stage-pin');
+  if (!stage || !pin) return;
+
+  const root = document.body;
+  const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+  const bell = (p, center, width) => {
+    const x = (p - center) / width;
+    return Math.max(0, 1 - x * x);
+  };
+
+  // Bell-curve center/width per chapter. Inactive at p=0 and p=1.
+  const CURVES = [
+    { center: 0.10, width: 0.32 }, // About
+    { center: 0.50, width: 0.28 }, // Projects
+    { center: 0.90, width: 0.32 }, // Contact
+  ];
+
+  // Per-chapter glass shapes. Interpolated via smoothstep-lerp between
+  // adjacent targets as scroll progress (p) moves through the stage.
+  const TARGETS = [
+    { w: 1200, h: 460, r: 16 }, // About — ultra-wide cinematic frame
+    { w:  860, h: 720, r: 56 }, // Projects — tall pod, soft-cornered
+    { w:  600, h: 720, r: 52 }, // Contact — narrow portrait
+  ];
+  const CHAPTER_P = [0.10, 0.50, 0.90];
+  const smoothstep = (t) => t * t * (3 - 2 * t);
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const shapeAt = (p) => {
+    if (p <= CHAPTER_P[0]) return TARGETS[0];
+    if (p >= CHAPTER_P[2]) return TARGETS[2];
+    const i = p < CHAPTER_P[1] ? 0 : 1;
+    const t = (p - CHAPTER_P[i]) / (CHAPTER_P[i + 1] - CHAPTER_P[i]);
+    const e = smoothstep(t);
+    const a = TARGETS[i], b = TARGETS[i + 1];
+    return { w: lerp(a.w, b.w, e), h: lerp(a.h, b.h, e), r: lerp(a.r, b.r, e) };
+  };
+
+  const chapterButtons = Array.from(document.querySelectorAll('.stage-chapter'));
+
   let ticking = false;
-  const tick = () => {
+  const compute = () => {
     const rect = stage.getBoundingClientRect();
-    const viewportHeight = window.innerHeight;
-    const total = Math.max(1, stage.offsetHeight - viewportHeight);
-    const progress = Math.min(1, Math.max(0, -rect.top / total));
+    const total = Math.max(1, stage.offsetHeight - window.innerHeight);
+    const p = clamp(-rect.top / total, 0, 1);
 
-    const rotation = progress * 540;
-    const viewMid = viewportHeight / 2;
-    let best = 0;
-    let bestDist = Infinity;
+    const bgScale = 1 + p * 0.18;
+    const bgY = -p * 180;
+    const fog = 0.15 + p * 0.55;
+    const winScale = 1 + 0.08 * Math.sin(p * Math.PI);
 
-    scenes.forEach((scene, index) => {
-      const sceneRect = scene.getBoundingClientRect();
-      const midpoint = sceneRect.top + sceneRect.height / 2;
-      const distance = Math.abs(midpoint - viewMid);
-      if (distance < bestDist) {
-        best = index;
-        bestDist = distance;
-      }
+    // Projects band runs 0.30 → 0.70 in stage progress.
+    const PROJ_START = 0.30, PROJ_END = 0.70;
+    const projP = clamp((p - PROJ_START) / (PROJ_END - PROJ_START), 0, 1);
+    root.style.setProperty('--proj-p', smoothstep(projP).toFixed(4));
+
+    const s = shapeAt(p);
+    const maxW = Math.min(s.w, window.innerWidth * 0.92);
+    const scale = maxW / s.w;
+    const winW = maxW;
+    const winH = Math.min(s.h * scale, window.innerHeight * 0.82);
+
+    root.style.setProperty('--p', p.toFixed(4));
+    root.style.setProperty('--bg-scale', bgScale.toFixed(4));
+    root.style.setProperty('--bg-y', `${bgY.toFixed(1)}px`);
+    root.style.setProperty('--fog', fog.toFixed(3));
+    root.style.setProperty('--win-radius', `${s.r.toFixed(2)}px`);
+    root.style.setProperty('--win-scale', winScale.toFixed(4));
+    root.style.setProperty('--win-w', `${winW.toFixed(1)}px`);
+    root.style.setProperty('--win-h', `${winH.toFixed(1)}px`);
+
+    CURVES.forEach((curve, i) => {
+      const op = bell(p, curve.center, curve.width);
+      root.style.setProperty(`--op-${i}`, op.toFixed(3));
+      root.style.setProperty(`--pointer-${i}`, op > 0.5 ? 'auto' : 'none');
     });
 
-    if (best !== currentScene || !scenes[best].classList.contains('in')) {
-      currentScene = best;
-      scenes.forEach((scene, index) => scene.classList.toggle('in', index === best));
-      railBtns.forEach((button, index) => button.classList.toggle('on', index === best));
-    }
-
-    const scene = scenes[currentScene];
-    const align = scene ? scene.dataset.align : 'center';
-    const targetX = align === 'left' ? 180 : align === 'right' ? -180 : 0;
-    const targetY = align === 'center' ? Math.min(340, viewportHeight * 0.32) : 0;
-    const targetScale = align === 'center' ? (viewportHeight < 700 ? 0.42 : 0.55) : 1;
-
-    const prevX = parseFloat(hero.style.getPropertyValue('--hox')) || 0;
-    const nextX = prevX + (targetX - prevX) * 0.12;
-    const prevY = parseFloat(hero.style.getPropertyValue('--hoy')) || 0;
-    const nextY = prevY + (targetY - prevY) * 0.12;
-    const prevScale = parseFloat(hero.style.getPropertyValue('--hoscaleTarget')) || 1;
-    const nextScale = prevScale + (targetScale - prevScale) * 0.12;
-    const scale = (1 + Math.sin(progress * Math.PI) * 0.06) * nextScale;
-
-    hero.style.setProperty('--hoscaleTarget', nextScale.toFixed(3));
-    hero.style.setProperty('--hox', `${nextX.toFixed(1)}px`);
-    hero.style.setProperty('--hoy', `${nextY.toFixed(1)}px`);
-    hero.style.setProperty('--hoscale', scale.toFixed(3));
-    hero.style.setProperty('--horot', `${rotation.toFixed(1)}deg`);
-
-    const converge = Math.min(1, Math.max(0, progress * 1.05 + currentScene * 0.05));
-    const startRadius = 200;
-    const endRadius = 38;
-    const pathPoints = [];
-
-    for (let i = 0; i < N; i += 1) {
-      const t = i / (N - 1);
-      const baseAngle = t * Math.PI * 4.2 + (rotation * Math.PI / 180) * 0.08;
-      const baseRadius = startRadius * (1 - t) + endRadius * t;
-      const jitterRadius = (jitter(i, 1.1) - 0.5) * 60 * (1 - converge);
-      const jitterAngle = (jitter(i, 2.3) - 0.5) * 0.9 * (1 - converge);
-      const radius = baseRadius + jitterRadius;
-      const angle = baseAngle + jitterAngle;
-      const x = Math.cos(angle) * radius;
-      const y = Math.sin(angle) * radius;
-
-      pathPoints.push([x, y]);
-
-      const dot = attempts[i];
-      dot.setAttribute('cx', x.toFixed(1));
-      dot.setAttribute('cy', y.toFixed(1));
-      dot.setAttribute('r', (1.4 + t * 1.6).toFixed(2));
-      dot.style.opacity = (0.25 + t * 0.75).toFixed(2);
-      dot.classList.toggle('active', i >= N - 3);
-    }
-
-    const pathData = pathPoints
-      .map((point, index) => `${index === 0 ? 'M' : 'L'} ${point[0].toFixed(1)} ${point[1].toFixed(1)}`)
-      .join(' ');
-    trailMain.setAttribute('d', pathData);
-    trailMain.style.opacity = (0.35 + converge * 0.55).toFixed(2);
-
-    if (!trailGhost.getAttribute('data-init')) {
-      const ghost = [];
-      for (let i = 0; i < 60; i += 1) {
-        const t = i / 59;
-        const angle = t * Math.PI * 5 + 0.6;
-        const radius = 210 * (1 - t * 0.5) + (jitter(i, 9) - 0.5) * 25;
-        ghost.push(`${i === 0 ? 'M' : 'L'} ${(Math.cos(angle) * radius).toFixed(1)} ${(Math.sin(angle) * radius).toFixed(1)}`);
-      }
-      trailGhost.setAttribute('d', ghost.join(' '));
-      trailGhost.setAttribute('data-init', '1');
-    }
-
-    trailGhost.style.opacity = (0.25 * (1 - converge)).toFixed(2);
-    coreShape.setAttribute('d', shapes[currentScene] || shapes[0]);
-    coreGroup.style.opacity = (0.4 + converge * 0.6).toFixed(2);
-    coreGroup.setAttribute('transform', `rotate(${(rotation * 0.3).toFixed(1)})`);
-    coreTag.textContent = tagsByScene[currentScene] || tagsByScene[0];
-
-    const bgx = 50 + Math.sin(progress * Math.PI * 2) * 18;
-    const bgy = 30 + progress * 40;
-    const bga = 0.14 + Math.sin(progress * Math.PI) * 0.10;
-    const bgb = 0.10 + (1 - Math.cos(progress * Math.PI)) * 0.10;
-    bg.style.setProperty('--bgx', `${bgx}%`);
-    bg.style.setProperty('--bgy', `${bgy}%`);
-    bg.style.setProperty('--bga', bga.toFixed(3));
-    bg.style.setProperty('--bgb', bgb.toFixed(3));
+    const active = p < 0.33 ? 0 : p < 0.66 ? 1 : 2;
+    chapterButtons.forEach(button => {
+      const idx = Number.parseInt(button.dataset.chapter, 10);
+      const on = idx === active;
+      button.classList.toggle('on', on);
+      button.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
 
     ticking = false;
   };
 
-  const requestTick = () => {
-    if (!ticking) {
-      requestAnimationFrame(tick);
-      ticking = true;
-    }
+  const onScroll = () => {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(compute);
   };
 
-  if (!prefersReducedMotion) {
-    window.addEventListener('scroll', requestTick, { passive: true });
-    window.addEventListener('resize', requestTick);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  compute();
+}
 
-    const loop = () => {
-      const rect = stage.getBoundingClientRect();
-      if (rect.bottom > 0 && rect.top < window.innerHeight) {
-        tick();
-      }
-      requestAnimationFrame(loop);
-    };
-    loop();
-  }
+function initChapterDots() {
+  const stage = document.querySelector('.stage');
+  if (!stage) return;
 
-  railBtns.forEach(button => {
-    button.addEventListener('click', () => {
-      const target = Number.parseInt(button.dataset.goto, 10);
-      const scene = scenes[target];
-      if (!scene) return;
-      window.scrollTo({
-        top: scene.getBoundingClientRect().top + window.scrollY,
-        behavior: 'smooth'
-      });
+  const targets = [0.05, 0.50, 0.95];
+  document.querySelectorAll('.stage-chapter, a[data-chapter]').forEach(element => {
+    element.addEventListener('click', event => {
+      const idx = Number.parseInt(element.dataset.chapter, 10);
+      if (Number.isNaN(idx)) return;
+      event.preventDefault();
+
+      const total = Math.max(1, stage.offsetHeight - window.innerHeight);
+      const targetY = stage.offsetTop + targets[idx] * total;
+      window.scrollTo({ top: targetY, behavior: 'smooth' });
     });
   });
+}
 
+function initProjectsSubCarousel() {
+  const carousel = document.querySelector('.stage-layer[data-layer="1"] .app-carousel');
+  if (!carousel) return;
+
+  let lastActive = -1;
+  const sync = () => {
+    const projP = parseFloat(getComputedStyle(document.body).getPropertyValue('--proj-p')) || 0;
+    const active = projP >= 0.5 ? 1 : 0;
+    if (active !== lastActive) {
+      carousel.setAttribute('data-active', String(active));
+      lastActive = active;
+    }
+  };
+  window.addEventListener('scroll', sync, { passive: true });
+  sync();
+}
+
+function initReveal() {
   if ('IntersectionObserver' in window) {
     const revealObserver = new IntersectionObserver(entries => {
       entries.forEach(entry => {
@@ -247,16 +206,13 @@ function initHomePage() {
   } else {
     document.querySelectorAll('.reveal').forEach(element => element.classList.add('in'));
   }
-
-  initContactForm();
-  initHomeAnchorScroll();
 }
 
 function initContactForm() {
   const form = document.getElementById('contact-form');
   if (!form) return;
 
-  const endpoint = 'https://formspree.io/f/xnnebzpo';
+  const endpoint = form.getAttribute('action') || 'https://formspree.io/f/xnnebzpo';
   form.addEventListener('submit', async event => {
     event.preventDefault();
 
@@ -292,6 +248,8 @@ function initContactForm() {
 
 function initHomeAnchorScroll() {
   document.querySelectorAll('a[href^="#"]').forEach(link => {
+    if (link.hasAttribute('data-chapter')) return;
+
     link.addEventListener('click', event => {
       const href = link.getAttribute('href');
       if (!href || href.length <= 1) return;
@@ -301,7 +259,7 @@ function initHomeAnchorScroll() {
 
       event.preventDefault();
       window.scrollTo({
-        top: target.getBoundingClientRect().top + window.scrollY - 72,
+        top: target.getBoundingClientRect().top + window.scrollY - 90,
         behavior: 'smooth'
       });
     });

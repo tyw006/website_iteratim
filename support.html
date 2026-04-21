@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Support — Iteratim</title>
-<meta name="description" content="Support for Iteratim apps, including Seshy and Trainadapt.">
+<meta name="description" content="Support for Iteratim apps, including Seshy and TrainAdapt.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -14,21 +14,40 @@
 <div class="stage-bg"></div>
 
 <nav class="nav" id="nav">
-  <div class="wrap">
+  <div class="nav-pill">
     <a class="brand" href="index.html">
-      <svg class="brand-logo" viewBox="0 0 32 32" fill="none">
-        <rect x="3" y="3" width="26" height="26" rx="5" stroke="#00d4aa" stroke-width="1.3" opacity=".5"/>
-        <rect x="7" y="7" width="18" height="18" rx="4" stroke="#00d4aa" stroke-width="1.3" transform="rotate(12 16 16)" opacity=".75"/>
-        <rect x="11" y="11" width="10" height="10" rx="2.5" fill="#00d4aa" transform="rotate(24 16 16)"/>
+      <svg class="brand-logo" viewBox="0 0 40 20" fill="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="logoGoldSupNav" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#fff5d4"/>
+            <stop offset="50%" stop-color="#f3d089"/>
+            <stop offset="100%" stop-color="#c89540"/>
+          </linearGradient>
+          <filter id="logoGlowSupNav" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="0.6"/>
+          </filter>
+        </defs>
+        <path id="ribbonPathSupNav"
+              d="M 6 10 C 6 3, 14 3, 20 10 C 26 17, 34 17, 34 10 C 34 3, 26 3, 20 10 C 14 17, 6 17, 6 10 Z"
+              stroke="#ffffff" stroke-width="1.6"
+              stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>
+        <circle cx="20" cy="10" r="2.1" fill="url(#logoGoldSupNav)"/>
+        <circle cx="19.3" cy="9.3" r="0.6" fill="#fff9e3" opacity=".85"/>
+        <circle r="1.25" fill="url(#logoGoldSupNav)" filter="url(#logoGlowSupNav)">
+          <animateMotion dur="6s" repeatCount="indefinite" rotate="auto">
+            <mpath href="#ribbonPathSupNav"/>
+          </animateMotion>
+        </circle>
       </svg>
       <span class="brand-name">iteratim</span>
     </a>
+    <span class="nav-divider" aria-hidden="true"></span>
     <div class="nav-links">
-      <a href="index.html#work">Work</a>
+      <a href="index.html#apps">Apps</a>
       <a href="index.html#approach">Approach</a>
       <a href="privacy.html">Privacy</a>
-      <a class="nav-cta" href="index.html#contact">Contact</a>
     </div>
+    <a class="nav-cta" href="index.html#contact">Contact →</a>
   </div>
 </nav>
 
@@ -49,7 +68,7 @@
     <div class="support-grid">
       <section class="panel">
         <h2>One studio,<br><em>two tracks.</em></h2>
-        <p>Seshy is the public app that is already live. Trainadapt is still in development, so its support path is mostly release updates and privacy information for now.</p>
+        <p>Seshy is the public app that is already live. TrainAdapt is still in development, so its support path is mostly release updates and privacy information for now.</p>
         <div class="panel-meta">
           <span><b>Support</b> · support@iteratim.io</span>
           <span><b>Studio</b> · contact@iteratim.io</span>
@@ -80,17 +99,17 @@
         <section class="app-card" id="trainadapt">
           <div class="app-head">
             <div class="app-icon">
-              <img src="assets/images/trainadapt-icon.png" alt="Trainadapt app icon">
+              <img src="assets/images/trainadapt-icon.png" alt="TrainAdapt app icon">
             </div>
             <div class="app-copy">
-              <h3>Trainadapt</h3>
+              <h3>TrainAdapt</h3>
               <p>The personal AI training architect.</p>
             </div>
           </div>
           <div class="status soon"><span class="dot"></span>Coming soon</div>
-          <p>Trainadapt is not publicly released yet. For launch questions or early access interest, use the support route and mention Trainadapt in the subject line.</p>
+          <p>TrainAdapt is not publicly released yet. For launch questions or early access interest, use the support route and mention TrainAdapt in the subject line.</p>
           <div class="actions">
-            <a class="link-pill" href="mailto:support@iteratim.io?subject=Trainadapt%20Question">Email support ↗</a>
+            <a class="link-pill" href="mailto:support@iteratim.io?subject=TrainAdapt%20Question">Email support ↗</a>
             <a class="link-pill" href="privacy.html#trainadapt">Privacy ↗</a>
           </div>
         </section>
