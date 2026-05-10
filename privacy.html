@@ -61,8 +61,8 @@
     </div>
     <h1><em>Privacy,</em><br>in plain<br>language.</h1>
     <div class="p-meta">
-      <div><span class="k">Effective</span><span class="v">May 8, 2026</span></div>
-      <div><span class="k">Version</span><span class="v">1.1</span></div>
+      <div><span class="k">Effective</span><span class="v">May 10, 2026</span></div>
+      <div><span class="k">Version</span><span class="v">1.2</span></div>
       <div><span class="k">Covers</span><span class="v">Seshy · TrainAdapt</span></div>
       <div><span class="k">Contact</span><span class="v">contact@iteratim.io</span></div>
     </div>
@@ -146,7 +146,7 @@
               <div class="acc-item">
                 <button class="acc-head"><span class="acc-num">1.2</span><span class="acc-title">User content &amp; workouts</span><span class="acc-chev"></span></button>
                 <div class="acc-body"><div class="acc-body-inner">
-                  <p><strong>Seshy</strong> may process the content you create, scan, edit, or share: workout types, sections, movements, scores, modifiers, notes, timestamps, OCR metadata, gym location (if you choose), overlay settings, drafts, exports, and any photos/videos/captions you use.</p>
+                  <p><strong>Seshy</strong> may process the content you create, scan, edit, or share: workout types, sections, movements, scores, modifiers, notes, timestamps, OCR metadata, structured OCR results, gym location (if you choose), overlay settings, drafts, exports, and any photos/videos/captions you use.</p>
                   <p>In-progress editor work stays as a local draft until you save, share, export, reset, or migrate it. Guest history stays on your device unless you connect an account, but limited server-side scan metadata may be retained for quota, reliability, abuse prevention, and cost monitoring.</p>
                 </div></div>
               </div>
@@ -163,8 +163,8 @@
               <div class="acc-item">
                 <button class="acc-head"><span class="acc-num">1.4</span><span class="acc-title">AI &amp; OCR processing</span><span class="acc-chev"></span></button>
                 <div class="acc-body"><div class="acc-body-inner">
-                  <p>When you scan a workout whiteboard in <strong>Seshy</strong>, the image is sent to Google Gemini / Google AI so the app can convert it into structured workout data. Seshy doesn't retain the original image after parsing in normal use.</p>
-                  <p>Seshy may log limited scan metadata for guest and signed-in scans, such as model, token counts, estimated cost, success or failure status, timestamps, and scan session identifiers, to operate scan quotas, monitor reliability, prevent abuse, and account for service costs.</p>
+                  <p>When you scan a workout whiteboard or workout image in <strong>Seshy</strong>, the image is sent to Google Gemini / Google AI so the app can convert it into structured workout data. Seshy doesn't retain the original image after parsing in normal use.</p>
+                  <p>Seshy may log scan metadata for guest and signed-in scans, such as model, token counts, estimated cost, success or failure status, timestamps, and scan session identifiers, to operate scan quotas, monitor reliability, prevent abuse, and account for service costs. For signed-in scans, Seshy may also retain a structured OCR result snapshot, such as workout sections, movements, timing, confidence, warnings, parser version, and related scan settings, for debugging, support, OCR reliability, and service improvement.</p>
                   <p><strong>TrainAdapt</strong> may send relevant profile, workout, and feedback data to OpenAI or Google Gemini (where enabled) to generate programs, adapt workouts, and provide coaching recommendations. It may also use Langfuse for AI observability and debugging.</p>
                   <p>If you submit OCR feedback and choose to include the source image, we may store it for debugging and product improvement.</p>
                 </div></div>
@@ -183,7 +183,7 @@
                 <button class="acc-head"><span class="acc-num">1.6</span><span class="acc-title">Analytics &amp; diagnostics</span><span class="acc-chev"></span></button>
                 <div class="acc-body"><div class="acc-body-inner">
                   <p>We collect limited analytics and diagnostics to understand reliability, feature usage, and crashes: app version, device type, OS, locale, interaction events, crash reports, error logs, and approximate IP.</p>
-                  <p>We configure these tools to avoid collecting raw OCR text, source images, media paths, exact gym coordinates, health samples, payment card data, or credentials. PostHog session replay is <strong>off</strong> for the Seshy MVP.</p>
+                  <p>We configure these tools to avoid collecting OCR source images, full provider prompts or responses, media paths, exact gym coordinates, health samples, payment card data, or credentials. PostHog session replay is <strong>off</strong> for the Seshy MVP.</p>
                 </div></div>
               </div>
             </div>
@@ -318,7 +318,8 @@
                     <li>Cloud workout data: until you delete it, delete your account, or request deletion</li>
                     <li>Guest/local drafts: on your device until you remove them</li>
                     <li>OCR source images: not retained after normal parsing</li>
-                    <li>Limited OCR scan metadata, including token and cost metadata: retained for reasonable operational, security, accounting, and reliability periods</li>
+                    <li>OCR scan metadata, including token and cost metadata: retained for reasonable operational, security, accounting, and reliability periods</li>
+                    <li>Signed-in structured OCR result snapshots: retained for debugging, support, OCR reliability, and service improvement until no longer needed</li>
                     <li>OCR feedback records: retained for debugging and product improvement</li>
                     <li>Temporary export files: deleted after share/save flows when practical</li>
                     <li>Analytics, diagnostic, security, and subscription logs: reasonable operational periods</li>
@@ -366,7 +367,8 @@
               <div class="acc-body" style="max-height:999px"><div class="acc-body-inner">
                 <p>When you scan a workout whiteboard or image, Seshy sends the image to Google Gemini / Google AI so it can convert it into structured workout information — sections, movements, timing, scores, confidence, and related fields.</p>
                 <p><strong>Seshy does not retain the original OCR image after parsing</strong> in normal use. The only exception: if you explicitly submit OCR feedback and choose to include the source image, we may store your feedback note, issue tags, corrected workout data, and the image for debugging and product improvement.</p>
-                <p>Seshy may retain limited OCR scan metadata for guest and signed-in scans, including model, token counts, estimated cost, success or failure status, timestamps, and scan session identifiers. We use this metadata for quota enforcement, reliability monitoring, abuse prevention, and service cost accounting.</p>
+                <p>Seshy may retain OCR scan metadata for guest and signed-in scans, including model, token counts, estimated cost, success or failure status, timestamps, and scan session identifiers. We use this metadata for quota enforcement, reliability monitoring, abuse prevention, and service cost accounting.</p>
+                <p>For signed-in scans, Seshy may also retain a structured OCR result snapshot, such as workout sections, movements, timing, confidence, warnings, parser version, and related scan settings. We use these snapshots for debugging, support, OCR reliability, and service improvement. Seshy does not retain the original source image in these snapshots.</p>
               </div></div>
             </div>
             <div class="acc-item">
