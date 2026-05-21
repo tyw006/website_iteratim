@@ -147,7 +147,7 @@
                 <button class="acc-head"><span class="acc-num">1.2</span><span class="acc-title">User content &amp; workouts</span><span class="acc-chev"></span></button>
                 <div class="acc-body"><div class="acc-body-inner">
                   <p><strong>Seshy</strong> may process the content you create, scan, edit, or share: workout types, sections, movements, scores, modifiers, notes, timestamps, OCR metadata, structured OCR results, gym location (if you choose), overlay settings, drafts, exports, and any photos/videos/captions you use.</p>
-                  <p>In-progress editor work stays as a local draft until you save, share, export, reset, or migrate it. Guest history stays on your device unless you connect an account, but limited server-side scan metadata may be retained for quota, reliability, abuse prevention, and cost monitoring.</p>
+                  <p>In-progress editor work stays as a local draft until you save, share, export, reset, or migrate it. Guest history stays on your device unless you connect an account, but limited server-side scan metadata may be retained for subscription access enforcement, reliability, abuse prevention, and cost monitoring.</p>
                 </div></div>
               </div>
 
@@ -164,7 +164,7 @@
                 <button class="acc-head"><span class="acc-num">1.4</span><span class="acc-title">AI &amp; OCR processing</span><span class="acc-chev"></span></button>
                 <div class="acc-body"><div class="acc-body-inner">
                   <p>When you scan a workout whiteboard or workout image in <strong>Seshy</strong>, the image is sent to Google Gemini / Google AI so the app can convert it into structured workout data. Seshy doesn't retain the original image after parsing in normal use.</p>
-                  <p>Seshy may log scan metadata for guest and signed-in scans, such as model, token counts, estimated cost, success or failure status, timestamps, and scan session identifiers, to operate scan quotas, monitor reliability, prevent abuse, and account for service costs. For signed-in scans, Seshy may also retain a structured OCR result snapshot, such as workout sections, movements, timing, confidence, warnings, parser version, and related scan settings, for debugging, support, OCR reliability, and service improvement.</p>
+                  <p>Seshy may log scan metadata for guest and signed-in scans, such as model, token counts, estimated cost, success or failure status, timestamps, and scan session identifiers, to enforce subscription access, monitor reliability, prevent abuse, and account for service costs. For signed-in scans, Seshy may also retain a structured OCR result snapshot, such as workout sections, movements, timing, confidence, warnings, parser version, and related scan settings, for debugging, support, OCR reliability, and service improvement.</p>
                   <p><strong>TrainAdapt</strong> may send relevant profile, workout, and feedback data to OpenAI or Google Gemini (where enabled) to generate programs, adapt workouts, and provide coaching recommendations. It may also use Langfuse for AI observability and debugging.</p>
                   <p>If you submit OCR feedback and choose to include the source image, we may store it for debugging and product improvement.</p>
                 </div></div>
@@ -175,7 +175,7 @@
                 <div class="acc-body"><div class="acc-body-inner">
                   <p>Purchases go through the Apple App Store or Google Play. We don't receive or store your payment card number.</p>
                   <p>We use <strong>RevenueCat</strong> to validate purchases, manage subscriptions, restore purchases, and sync entitlement status. RevenueCat processes receipts, product IDs, subscription status, and customer identifiers.</p>
-                  <p>At launch, Seshy Free includes 5 OCR scans per month; Seshy Pro includes unlimited scans. Seshy Pro does not include a free trial at launch.</p>
+                  <p>At launch, Seshy Free includes manual entry and the currently shipped studio, save, export, and share tools; Seshy Pro includes unlimited AI/OCR workout scans. Eligible new iOS subscribers may receive a 7-day free trial on the annual Seshy Pro plan only. The monthly plan does not include a free trial.</p>
                 </div></div>
               </div>
 
@@ -209,7 +209,7 @@
               <div class="acc-item">
                 <button class="acc-head"><span class="acc-num">2.2</span><span class="acc-title">Support, safety, reliability</span><span class="acc-chev"></span></button>
                 <div class="acc-body"><div class="acc-body-inner">
-                  <p>We use information to respond to support and privacy requests, debug crashes, prevent abuse, enforce quotas, protect security, and understand reliability.</p>
+                  <p>We use information to respond to support and privacy requests, debug crashes, prevent abuse, enforce subscription access, protect security, and understand reliability.</p>
                 </div></div>
               </div>
               <div class="acc-item">
@@ -367,7 +367,7 @@
               <div class="acc-body" style="max-height:999px"><div class="acc-body-inner">
                 <p>When you scan a workout whiteboard or image, Seshy sends the image to Google Gemini / Google AI so it can convert it into structured workout information — sections, movements, timing, scores, confidence, and related fields.</p>
                 <p><strong>Seshy does not retain the original OCR image after parsing</strong> in normal use. The only exception: if you explicitly submit OCR feedback and choose to include the source image, we may store your feedback note, issue tags, corrected workout data, and the image for debugging and product improvement.</p>
-                <p>Seshy may retain OCR scan metadata for guest and signed-in scans, including model, token counts, estimated cost, success or failure status, timestamps, and scan session identifiers. We use this metadata for quota enforcement, reliability monitoring, abuse prevention, and service cost accounting.</p>
+                <p>Seshy may retain OCR scan metadata for guest and signed-in scans, including model, token counts, estimated cost, success or failure status, timestamps, and scan session identifiers. We use this metadata for subscription access enforcement, reliability monitoring, abuse prevention, and service cost accounting.</p>
                 <p>For signed-in scans, Seshy may also retain a structured OCR result snapshot, such as workout sections, movements, timing, confidence, warnings, parser version, and related scan settings. We use these snapshots for debugging, support, OCR reliability, and service improvement. Seshy does not retain the original source image in these snapshots.</p>
               </div></div>
             </div>
@@ -382,9 +382,9 @@
               <button class="acc-head"><span class="acc-num">S.3</span><span class="acc-title">Launch &amp; subscription details</span><span class="acc-chev"></span></button>
               <div class="acc-body"><div class="acc-body-inner">
                 <ul>
-                  <li>Free: 5 OCR scans per month</li>
-                  <li>Seshy Pro: unlimited OCR scans</li>
-                  <li>Seshy Pro does not include a free trial at launch</li>
+                  <li>Free: manual entry plus currently shipped studio, save, export, and share tools</li>
+                  <li>Seshy Pro: unlimited AI/OCR workout scans</li>
+                  <li>Eligible new iOS annual subscribers may receive a 7-day free trial; monthly is pay-now with no trial</li>
                   <li>Seshy launch does not rely on push notifications</li>
                   <li>Seshy launch legal disclosures do not claim Google Sign-In</li>
                 </ul>
