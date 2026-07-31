@@ -41,8 +41,8 @@
     </a>
     <span class="nav-divider" aria-hidden="true"></span>
     <div class="nav-links">
-      <a href="/index.html#apps">Apps</a>
-      <a href="/index.html#approach">Approach</a>
+      <a href="/index.html#projects">Projects</a>
+      <a href="/index.html#about">About</a>
       <a href="/privacy.html/">Privacy</a>
       <a href="/support.html">Support</a>
     </div>
@@ -61,9 +61,9 @@
     </div>
     <h1><em>Privacy,</em><br>in plain<br>language.</h1>
     <div class="p-meta">
-      <div><span class="k">Effective</span><span class="v">May 21, 2026</span></div>
-      <div><span class="k">Version</span><span class="v">1.3</span></div>
-      <div><span class="k">Covers</span><span class="v">Seshy · TrainAdapt</span></div>
+      <div><span class="k">Effective</span><span class="v">July 31, 2026</span></div>
+      <div><span class="k">Version</span><span class="v">1.4</span></div>
+      <div><span class="k">Covers</span><span class="v">Seshy · TrainAdapt · Websites</span></div>
       <div><span class="k">Contact</span><span class="v">contact@iteratim.io</span></div>
     </div>
   </div>
@@ -116,10 +116,6 @@
                       <li>AI features only run when <strong>you choose them</strong> — scans, coaching, etc.</li>
                       <li>You can request access, deletion, or a copy of your data any time: <a href="mailto:contact@iteratim.io">contact@iteratim.io</a>.</li>
                     </ul>
-                    <div class="callout">
-                      <b>Not legal advice</b>
-                      This document is an Iteratim product/legal draft. If you need legal help, talk to a qualified attorney.
-                    </div>
                   </div>
                 </div>
               </div>
@@ -186,6 +182,20 @@
                   <p>We configure these tools to avoid collecting OCR source images, full provider prompts or responses, media paths, exact gym coordinates, health samples, payment card data, or credentials. PostHog session replay is <strong>off</strong> for the Seshy MVP.</p>
                 </div></div>
               </div>
+              <div class="acc-item">
+                <button class="acc-head"><span class="acc-num">1.7</span><span class="acc-title">Websites &amp; landing pages</span><span class="acc-chev"></span></button>
+                <div class="acc-body"><div class="acc-body-inner">
+                  <p>When you visit our websites — including iteratim.io and the Seshy site at seshy.app (for example, by tapping the link in a Seshy social profile) — we and our providers process limited technical information to deliver the pages and understand, in aggregate, where visitors come from:</p>
+                  <ul>
+                    <li>The page URL you landed on, including a fixed allowlist of campaign ("UTM") parameters such as utm_source, utm_medium, utm_campaign, utm_content, and utm_term</li>
+                    <li>The referring page or app, and the date and time of the visit</li>
+                    <li>Browser and device category (for example browser family, operating system, and mobile vs. desktop)</li>
+                    <li>Approximate network information, such as your IP address, processed by our hosting provider (Netlify) to serve the site and by our analytics provider (PostHog) to derive approximate, city-level location</li>
+                    <li>Explicit interaction events only: a page-view event when a page loads and an event when you tap a download or App Store button</li>
+                  </ul>
+                  <p>Analytics on seshy.app are sent through a first-party endpoint on that domain and are configured for aggregate measurement only. On these sites we do <strong>not</strong> use session replay or screen recording, do <strong>not</strong> build advertising or person-level profiles, do <strong>not</strong> attempt to match a specific social profile or visitor to an app install, and do <strong>not</strong> store analytics cookies or localStorage identifiers — the analytics library runs in memory only, so no identifier persists on your device after you leave the page.</p>
+                </div></div>
+              </div>
             </div>
           </section>
 
@@ -233,7 +243,8 @@
                     <tbody>
                       <tr><td>Supabase</td><td>Auth, database, row-level-security storage, edge functions, feedback, workout data</td></tr>
                       <tr><td>RevenueCat</td><td>Purchase validation, subscriptions, entitlements, restores</td></tr>
-                      <tr><td>PostHog</td><td>Product analytics, funnel events, feature usage</td></tr>
+                      <tr><td>PostHog</td><td>Product analytics, funnel events, feature usage, website analytics</td></tr>
+                      <tr><td>Netlify</td><td>Website hosting and delivery for seshy.app (request logs, IP, request metadata)</td></tr>
                       <tr><td>Sentry</td><td>Crash reporting, diagnostics, sanitized logs</td></tr>
                       <tr><td>Google Gemini / Google AI</td><td>Seshy OCR + TrainAdapt AI programs where enabled</td></tr>
                       <tr><td>OpenAI</td><td>TrainAdapt AI program generation, summaries, recommendations</td></tr>
@@ -323,6 +334,7 @@
                     <li>OCR feedback records: retained for debugging and product improvement</li>
                     <li>Temporary export files: deleted after share/save flows when practical</li>
                     <li>Analytics, diagnostic, security, and subscription logs: reasonable operational periods</li>
+                    <li>Website analytics events: aggregate event data retained for reasonable operational periods; no persistent identifiers are stored in your browser</li>
                   </ul>
                 </div></div>
               </div>
@@ -394,6 +406,14 @@
               <button class="acc-head"><span class="acc-num">S.4</span><span class="acc-title">What Seshy does <em>not</em> do</span><span class="acc-chev"></span></button>
               <div class="acc-body"><div class="acc-body-inner">
                 <p>No advertising. No cross-app tracking. No sale of personal information. No use of health data for marketing, profiling, or targeted advertising. PostHog session replay is off for the MVP configuration.</p>
+              </div></div>
+            </div>
+            <div class="acc-item">
+              <button class="acc-head"><span class="acc-num">S.5</span><span class="acc-title">The seshy.app website</span><span class="acc-chev"></span></button>
+              <div class="acc-body"><div class="acc-body-inner">
+                <p>Seshy has a marketing website at <strong>seshy.app</strong>. If you arrive there from a Seshy social profile link, the link may include campaign ("UTM") tags identifying the source — for example, that you came from the Instagram profile.</p>
+                <p>On seshy.app we process only: the landing URL and its allowlisted UTM tags, the referrer, a timestamp, browser and device category, approximate network information (IP address processed by Netlify for hosting and by PostHog to derive approximate location), and two kinds of explicit events — a page view and a tap on the App Store button.</p>
+                <p>Analytics run through a first-party endpoint on seshy.app with in-memory persistence only: <strong>no analytics cookies, no localStorage, no session replay, no autocapture, no advertising profiles</strong>, and no attempt to link a specific social profile or website visit to a later app install.</p>
               </div></div>
             </div>
           </div>
